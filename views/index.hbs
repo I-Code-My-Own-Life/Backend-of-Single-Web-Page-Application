@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Web page</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="logo">
+        <!-- <h1 class="logo-text">Logo</h1> -->
+        <img src="/Assets/39f5fdbe34f1b58716e6571c1f1cb715.jpg" alt="">
+    </div>
+
+    <header>
+        <div class="navbar">
+            <nav>
+                <ul class="tabs">
+                    <li class="tab is-active"><a data-switcher data-tab="1">Home</a></li>
+                    <li class="tab"><a data-switcher data-tab="2">Dashboard</a></li>
+                    <li class="tab"><a data-switcher data-tab="3">Grade Calculator</a></li>
+                    <li class="tab"><a data-switcher data-tab="4">Login/Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Section we are going to display :  -->
+    <main>
+        <section class="pages">
+            <div class="page is-active" data-page="1">
+                <h2>Page 1</h2>
+                <p>Welcome to the home page.</p>
+            </div>
+            <div class="page" data-page="2">
+                <h2>Page 2</h2>
+                <p>Welcome to the dashboard page.</p>
+            </div>
+            <div class="page" data-page="3">
+                <h2>Page 3</h2>
+                <p>Welcome to the grade calculator page.</p>
+            </div>
+            <div class="page" data-page="4">
+                <h2>Page 4</h2>
+                <p>Welcome to the login/register page.</p>
+                
+            </div>
+        </section>
+    </main>
+</body>
+<script src="/page.js"></script>
+
+</html>
+
+<!-- Home -->
+<!-- Dashboard
+Grade Calculator
+Login/Register -->
