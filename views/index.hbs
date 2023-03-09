@@ -42,10 +42,44 @@
                 <h2>Page 3</h2>
                 <p>Welcome to the grade calculator page.</p>
             </div>
-            <div class="page" data-page="4">
-                <h2>Page 4</h2>
-                <p>Welcome to the login/register page.</p>
-                
+            <div id="login-reg" class="page" data-page="4">
+                <h1>Register</h1>
+                <!-- Register form -->
+                <form action="/" method="post">
+                    <div class="container">
+                        <hr>
+                        <!-- Name -->
+                        <label for="name"><b><i>Name</i></b></label>
+                        <input type="name" placeholder="Enter your name" name="name" id="name" required>
+                        <!-- Email -->
+                        <label for="email"><b><i>Email</i></b></label>
+                        <input type="text" placeholder="Enter your Email" name="email" id="email" required>
+                        <!-- Password -->
+                        <label for="password"><b><i>Password</i></b></label>
+                        <input type="password" placeholder="Enter your Password" name="password" id="password" required>
+                        <!-- Password -->
+                        <label for="age"><b><i>Age</i></b></label>
+                        <input type="age" placeholder="Enter your age" name="age" id="age" required>
+                        <button type="submit" class="registerbtn">Register</button>
+                    </div>
+                </form>
+                <h1 id="login-text">Login</h1>
+                <!-- Login form :  -->
+                <form action="">
+                    <div class="container">
+                        <!-- Email : -->
+                        <label for="email"><b><i>Email</i></b></label>
+                        <input type="text" placeholder="Enter your Email" name="email-login" id="email-login" required>
+                        <!-- Password -->
+                        <label for="password"><b><i>Password</i></b></label>
+                        <input type="password" placeholder="Enter your Password" name="password-login"
+                            id="password-login" required>
+                        <!-- Password -->
+                        <label for="age"><b><i>Age</i></b></label>
+                        <input type="age" placeholder="Enter your age" name="age-login" id="age-login" required>
+                        <button type="submit" class="loginbtn">Login</button>
+                    </div>
+                </form>
             </div>
         </section>
     </main>

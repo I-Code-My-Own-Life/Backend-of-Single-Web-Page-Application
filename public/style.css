@@ -1,41 +1,41 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif */
     /* font-family:Georgia, 'Times New Roman', Times, serif */
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', '    Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', '    Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-body{
-    overflow: hidden;
+body {
+    /* overflow: hidden; */
     background-color: #EEE;
 }
 
-header{
+header {
     background-color: #FFF;
-    box-shadow: 3px 2px 17px 1px ;
+    box-shadow: 3px 2px 17px 1px;
 }
 
-.logo-text{
+.logo-text {
     text-align: center;
 }
 
-header nav .tabs{
+header nav .tabs {
     display: flex;
     justify-content: space-around;
 }
 
-header nav .tab{
+header nav .tab {
     list-style-type: none;
     padding: 20px;
 }
 
-header nav .tab a{
+header nav .tab a {
     font-size: 20px;
 }
 
-.logo{
+.logo {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,7 +43,7 @@ header nav .tab a{
     /* background-color: blue; */
 }
 
-img{
+img {
     width: 100px;
     height: 80px;
 }
@@ -53,31 +53,93 @@ header nav .tabs .tab {
     cursor: pointer;
 }
 
-header nav .tabs .tab:hover{
-    color:rgb(248, 11, 11);
+header nav .tabs .tab:hover {
+    color: rgb(248, 11, 11);
 }
 
 header nav .tabs .tab.is-active a {
-    color:rgb(255, 0, 0);
+    color: rgb(255, 0, 0);
 }
 
 main {
-    padding-left: 140px;
-    padding-top: 140px;
-}
-
-.pages .page {
-    padding: 20px;
-}
-
-.pages .page p{
-    margin : 10px;
+    padding-left: 20px;
+    padding-top: 40px;
 }
 
 .pages .page {
     display: none;
 }
 
-.pages .page.is-active{
+.pages .page.is-active {
     display: block;
+}
+
+/* Desgining the login and registration page :  */
+#login-reg h1 {
+    font-size: 25px;
+    margin-top: 0;
+    text-align: center;
+}
+
+#login-text {
+    padding-top: 20px;
+}
+
+/* Add padding to containers */
+.container {
+    padding: 46px;
+}
+
+/* Full-width input fields */
+input[type=text],
+input[type=password],
+input[type=name],
+input[type=age] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0px 22px 0px;
+    display: inline-block;
+    border: none;
+    background: white;
+}
+
+input[type=text]:focus,
+input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+    border: 1px solid #f1f1f1;
+}
+
+/* Set a style for the submit/register button */
+.registerbtn,
+.loginbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.registerbtn:hover {
+    opacity: 1;
+}
+
+
+
+/* Add a blue text color to links */
+a {
+    color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+    background-color: #f1f1f1;
+    text-align: center;
 }
