@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
     <div class="logo">
         <!-- <h1 class="logo-text">Logo</h1> -->
         <img src="/Assets/39f5fdbe34f1b58716e6571c1f1cb715.jpg" alt="">
@@ -42,10 +43,18 @@
                 <h2>Page 3</h2>
                 <p>Welcome to the grade calculator page.</p>
             </div>
+            {{!-- Login page and registration page --}}
             <div id="login-reg" class="page" data-page="4">
+                {{#if errorMessage}}
+                <div class="alert alert-danger">{{errorMessage}}</div>
+                {{/if}}
+
+                {{#if successMessage}}
+                <div class="alert alert-success">{{successMessage}}</div>
+                {{/if}}
                 <h1>Register</h1>
                 <!-- Register form -->
-                <form action="/" method="post">
+                <form action="/" method="post" id="registration-form">
                     <div class="container">
                         <hr>
                         <!-- Name -->

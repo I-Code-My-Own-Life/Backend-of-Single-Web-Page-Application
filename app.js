@@ -22,9 +22,11 @@ const publicDirectory = path.join(__dirname, "./public");
 
 app.use(express.static(publicDirectory));
 
-app.use(bodyParser.json());
+// Parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(bodyParser.urlencoded({ extended: true }));
+//Parse application/json
+app.use(bodyParser.json());
 
 app.set("view engine", "hbs");
 
@@ -36,7 +38,9 @@ app.post("/", async (req, res) => {
     // Register functionality : 
     const { name, email, password, age } = req.body;
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
     // Insert the user into the database
     connection.query(
         'INSERT INTO information (name, email, password, age) VALUES (?, ?, ?, ?)',
@@ -44,15 +48,16 @@ app.post("/", async (req, res) => {
         (error, results) => {
             if (error) {
                 console.error(error);
-                res.status(500).send('Error registering user');
+                res.status(500).render('index');
             } else {
-                res.status(200).render('index');
+                res.status(200).render('index',{ successMessage: 'Successfully registered user' });
             }
         }
     );
+
+
     // Login functionality :
     //     const { username, password } = req.body;
-
     //   // Check if the user exists in the database
     //   connection.query(
     //     'SELECT * FROM users WHERE username = ? OR email = ?',

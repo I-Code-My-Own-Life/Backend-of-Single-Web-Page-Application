@@ -75,6 +75,17 @@ main {
 }
 
 /* Desgining the login and registration page :  */
+
+/* .navbar {
+    display: flex;
+    justify-content: center;
+} */
+
+/* Style the close button */
+.closebtn:hover {
+    color: black;
+}
+
 #login-reg h1 {
     font-size: 25px;
     margin-top: 0;
@@ -131,7 +142,27 @@ hr {
     opacity: 1;
 }
 
+/* Styling the alert box */
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    /* Red */
+    color: white;
+    margin-bottom: 15px;
+    display: none;
+}
 
+/* Add a close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
 /* Add a blue text color to links */
 a {
