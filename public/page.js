@@ -27,96 +27,99 @@ function closeAlert() {
 }
 
 // Get the registration form and alert box
-const registrationForm = document.getElementById('registration-form');
-const alertBox = document.getElementById('alert');
+const form = document.querySelector('#registration-form');
+const alertBox = document.querySelector('.alert');
 
-// Add an event listener to the form submission
-// registrationForm.addEventListener('submit', async (event) => {
-//     // Prevent the form from submitting normally
-//     event.preventDefault();
+// Adding event listener to form : 
+// Does work : 
 
-//     // Get the form data
-//     const formData = new FormData(event.target);
+// form.addEventListener('submit', async (event) => {
+//     event.preventDefault(); // prevent default form submission
 
-//     // Send the data to the server
-//     const response = await fetch('/', {
-//         method: 'POST',
-//         body: formData
-//     });
+//     const formData = new FormData(form);
+//     const xhr = new XMLHttpRequest();
 
-//     // Parse the response
-//     const responseData = await response.json();
+//     xhr.open('POST', '/');
+//     xhr.setRequestHeader('Content-Type', 'application/json');
+//     xhr.send(JSON.stringify(Object.fromEntries(formData)));
 
-//     // Display the response message
-//     if (responseData.status === 'success') {
-//         alertBox.style.backgroundColor = '#4CAF50';
-//         alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Success!</strong> User registered.';
-//         alertBox.style.display = 'block';
-//     } else {
-//         // Display an error message
-//         alertBox.style.backgroundColor = '#f44336';
-//         alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Error!</strong> User not registered.';
-//         alertBox.style.display = 'block';
-//     }
+//     xhr.onreadystatechange = function () {
+//         if (this.readyState === XMLHttpRequest.DONE) {
+//             if (this.status === 200) {
+// alertBox.style.display = "block";
+// alertBox.style.backgroundColor = '#f44336';
+// alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Success!</strong> User registered.';
+//             } else {
+//                 alertBox.style.display = "block";
+//                 alertBox.style.backgroundColor = '#f44336';
+//                 alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Error!</strong> User not registered.';
+//             }
+//         }
+//     };
 
-//     // Reset the form
 //     event.target.reset();
 // });
 
-// Getting something : 
 
-
-
-// Frontend code using vanilla JavaScript
-// const form = document.querySelector('#registration-form');
-// const alertBox = document.querySelector('#alert-box');
-
-// form.addEventListener('submit', (event) => {
-//   event.preventDefault(); // prevent default form submission
-
-//   const formData = new FormData(form);
-//   const xhr = new XMLHttpRequest();
-
-//   xhr.onreadystatechange = function() {
-//     if (this.readyState === XMLHttpRequest.DONE) {
-//       if (this.status === 200) {
-//         alertBox.innerHTML = '<div class="alert alert-success" role="alert">Registration successful!</div>';
-//       } else {
-//         alertBox.innerHTML = '<div class="alert alert-danger" role="alert">Registration failed. Please try again later.</div>';
-//       }
+// Does not work : 
+// form.addEventListener('submit', async (event) => {
+//     event.preventDefault();
+//     const formData = new FormData(form);
+//     const responseData = await fetch('/', {
+//         method: 'POST',
+//         body: formData
+//     });
+//     const responseText = await responseData.text();
+//     if (responseText === 'Registration successful') {
+//         // Display success alert
+// alertBox.style.display = "block";
+// alertBox.style.backgroundColor = '#f44336';
+// alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Success!</strong> User registered.';
+//         // Reset the form
+//         event.target.reset();
+//         registerForm.reset();
+//     } else if (responseText === 'Email already registered') {
+//         alertBox.style.display = "block";
+//         alertBox.style.backgroundColor = '#f44336';
+//         alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Error!</strong> Username already exists.';
+//         // Display error alert
+//     } else {
+//         // Display generic error alert
+//         alertBox.style.display = "block";
+//         alertBox.style.backgroundColor = '#f44336';
+//         alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Error occured !</strong>Please try again.';
 //     }
-//   };
-
-//   xhr.open('POST', '/');
-//   xhr.setRequestHeader('Content-Type', 'application/json');
-//   xhr.send(JSON.stringify(Object.fromEntries(formData)));
 // });
 
 
-// Backend code
-// app.post("/", async (req, res) => {
-//     const { name, email, password, age } = req.body;
-  
-//     try {
-//       const saltRounds = 10;
-//       const salt = await bcrypt.genSalt(saltRounds);
-//       const hashedPassword = await bcrypt.hash(password, salt);
-  
-//       connection.query(
-//         'INSERT INTO information (name, email, password, age) VALUES (?, ?, ?, ?)',
-//         [name, email, hashedPassword, age],
-//         (error, results) => {
-//           if (error) {
-//             console.error(error);
-//             res.status(500).json({ success: false });
-//           } else {
-//             res.status(200).json({ success: true });
-//           }
-//         }
-//       );
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ success: false });
-//     }
-//   });
-  
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault(); // prevent default form submission
+    const formData = new FormData(form);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = () => {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.status === 'success') {
+                alertBox.style.display = "block";
+                alertBox.style.backgroundColor = '#f44336';
+                alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Success!</strong> User registered.';
+                event.target.reset();
+            } else if (response.status === 'error') {
+                alertBox.style.display = "block";
+                alertBox.style.backgroundColor = '#f44336';
+                alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error occured!</strong>Please try again.';
+            } else if (response.status === 'username_taken') {
+                alertBox.style.display = "block";
+                alertBox.style.backgroundColor = '#f44336';
+                alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Email already exists.';
+            }
+        } else {
+            window.alert('Request failed. Please try again.');
+        }
+    };
+    xhr.send(JSON.stringify(Object.fromEntries(formData)));
+});
