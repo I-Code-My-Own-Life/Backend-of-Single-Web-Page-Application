@@ -3,8 +3,13 @@ const mysql = require("mysql");
 const path = require("path");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const bcrypt = require('bcrypt');
 const util = require('util');
+const passport = require('passport');
+const passportLocal = require('passport-local');
+const LocalStrategy = passportLocal.Strategy;
+const session = require('express-session');
 dotenv.config({ path: './.env' });
 
 const app = express();
@@ -21,6 +26,44 @@ const connection = mysql.createConnection(dbConfig);
 const publicDirectory = path.join(__dirname, "./public");
 
 app.use(express.static(publicDirectory));
+
+// Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Configure passport local strategy
+passport.use(new LocalStrategy(
+    {
+        usernameField: 'email',
+        passwordField: 'password'
+    },
+    function (email, password, done) {
+        // Check if the email is registered in the database
+        connection.query(
+            'SELECT * FROM information WHERE email = ?',
+            [email],
+            async (error, results) => {
+                if (error) {
+                    console.error(error);
+                    return done(error);
+                } else {
+                    if (results.length > 0) {
+                        // Compare the password with the hashed password in the database
+                        const isMatch = await bcrypt.compare(password, results[0].password);
+                        if (isMatch) {
+                            return done(null, results[0]);
+                        } else {
+                            return done(null, false, { message: 'Incorrect password.' });
+                        }
+                    } else {
+                        return done(null, false, { message: 'Email does not exist.' });
+                    }
+                }
+            }
+        );
+    }
+));
+
 
 // Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -108,63 +151,3 @@ app.listen(port, () => {
     console.log(`The server has been started at port ${port}`);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// app.post("/", async (req, res) => {
-//     const { name, email, password, age } = req.body;
-
-//     try {
-//         const saltRounds = 10;
-//         const salt = await bcrypt.genSalt(saltRounds);
-//         const hashedPassword = await bcrypt.hash(password, salt);
-
-//         connection.query(
-//             'INSERT INTO information (name, email, password, age) VALUES (?, ?, ?, ?)',
-//             [name, email, hashedPassword, age],
-//             (error, results) => {
-//                 if (error) {
-//                     console.error(error);
-//                     res.status(500).json({ success: false });
-//                 } else {
-//                     res.status(200).json({ success: true });
-//                 }
-//             }
-//         );
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ success: false });
-//     }
-// });
