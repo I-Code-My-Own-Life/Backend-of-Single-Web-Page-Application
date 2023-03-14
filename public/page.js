@@ -18,81 +18,19 @@ function Switch_page(id) {
     nextPage.classList.add("is-active");
 }
 
-// Get the alert element
-const alert = document.querySelector('.alert');
-
+// Registration alert box : 
+const alertBox = document.querySelector('.alert');
+// Login alert box : 
+const alertBoxLogin = document.querySelector('.alertLogin');
 // Function to close the alert
 function closeAlert() {
     alert.style.display = 'none';
 }
 
-// Get the registration form and alert box
+// Get the registration form 
 const form = document.querySelector('#registration-form');
-const alertBox = document.querySelector('.alert');
 
-// Adding event listener to form : 
-// Does work : 
-
-// form.addEventListener('submit', async (event) => {
-//     event.preventDefault(); // prevent default form submission
-
-//     const formData = new FormData(form);
-//     const xhr = new XMLHttpRequest();
-
-//     xhr.open('POST', '/');
-//     xhr.setRequestHeader('Content-Type', 'application/json');
-//     xhr.send(JSON.stringify(Object.fromEntries(formData)));
-
-//     xhr.onreadystatechange = function () {
-//         if (this.readyState === XMLHttpRequest.DONE) {
-//             if (this.status === 200) {
-// alertBox.style.display = "block";
-// alertBox.style.backgroundColor = '#f44336';
-// alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Success!</strong> User registered.';
-//             } else {
-//                 alertBox.style.display = "block";
-//                 alertBox.style.backgroundColor = '#f44336';
-//                 alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Error!</strong> User not registered.';
-//             }
-//         }
-//     };
-
-//     event.target.reset();
-// });
-
-
-// Does not work : 
-// form.addEventListener('submit', async (event) => {
-//     event.preventDefault();
-//     const formData = new FormData(form);
-//     const responseData = await fetch('/', {
-//         method: 'POST',
-//         body: formData
-//     });
-//     const responseText = await responseData.text();
-//     if (responseText === 'Registration successful') {
-//         // Display success alert
-// alertBox.style.display = "block";
-// alertBox.style.backgroundColor = '#f44336';
-// alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Success!</strong> User registered.';
-//         // Reset the form
-//         event.target.reset();
-//         registerForm.reset();
-//     } else if (responseText === 'Email already registered') {
-//         alertBox.style.display = "block";
-//         alertBox.style.backgroundColor = '#f44336';
-//         alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Error!</strong> Username already exists.';
-//         // Display error alert
-//     } else {
-//         // Display generic error alert
-//         alertBox.style.display = "block";
-//         alertBox.style.backgroundColor = '#f44336';
-//         alertBox.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Error occured !</strong>Please try again.';
-//     }
-// });
-
-
-
+// Adding event listener to registration form : 
 form.addEventListener('submit', (event) => {
     event.preventDefault(); // prevent default form submission
     const formData = new FormData(form);
@@ -119,6 +57,48 @@ form.addEventListener('submit', (event) => {
             }
         } else {
             window.alert('Request failed. Please try again.');
+        }
+    };
+    xhr.send(JSON.stringify(Object.fromEntries(formData)));
+});
+
+// Get the registration form 
+const loginForm = document.querySelector('#login-form');
+
+// Adding event listener to login form : 
+loginForm.addEventListener('submit', (event) => {
+    event.preventDefault(); // prevent default form submission
+    const formData = new FormData(loginForm);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = () => {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.status === 'success') {
+                alertBoxLogin.style.display = "block";
+                alertBoxLogin.style.backgroundColor = '#f44336';
+                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Success!</strong> User logged in.';
+                event.target.reset();
+            } else if (response.status === 'wrong_password') {
+                alertBoxLogin.style.display = "block";
+                alertBoxLogin.style.backgroundColor = '#f44336';
+                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error occured!</strong> Wrong password';
+            }
+            else if (response.status === 'error') {
+                alertBoxLogin.style.display = "block";
+                alertBoxLogin.style.backgroundColor = '#f44336';
+                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error occured !</strong> Please try again.';
+            } else if (response.status === 'email_does_not_exist') {
+                alertBoxLogin.style.display = "block";
+                alertBoxLogin.style.backgroundColor = '#f44336';
+                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Email does not exist.';
+            }
+        } else {
+            alertBoxLogin.style.display = "block";
+            alertBoxLogin.style.backgroundColor = '#f44336';
+            alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Invalid Credentials.';
         }
     };
     xhr.send(JSON.stringify(Object.fromEntries(formData)));

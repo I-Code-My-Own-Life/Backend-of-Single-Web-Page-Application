@@ -45,13 +45,7 @@
             </div>
             {{!-- Login page and registration page --}}
             <div id="login-reg" class="page" data-page="4">
-                {{#if errorMessage}}
-                <div class="alert alert-danger">{{errorMessage}}</div>
-                {{/if}}
-
-                {{#if successMessage}}
-                <div class="alert alert-success">{{successMessage}}</div>
-                {{/if}}
+                {{!-- Registration alert :  --}}
                 <div class="alert">
                     <span class="closebtn" onclick="closeAlert()">&times;</span>
                     This is a dismissible alert.
@@ -77,19 +71,21 @@
                     </div>
                 </form>
                 <h1 id="login-text">Login</h1>
+                {{!-- Login alert :  --}}
+                 <div class="alertLogin">
+                    <span class="closebtn" onclick="closeAlert()">&times;</span>
+                    This is a dismissible alert.
+                </div>
                 <!-- Login form :  -->
-                <form action="">
+                <form action="/" method="post" id="login-form">
                     <div class="container">
                         <!-- Email : -->
-                        <label for="email"><b><i>Email</i></b></label>
-                        <input type="text" placeholder="Enter your Email" name="email-login" id="email-login" required>
+                        <label for="emailLogin"><b><i>Email</i></b></label>
+                        <input type="text" placeholder="Enter your Email" name="emailLogin" id="emailLogin" required>
                         <!-- Password -->
-                        <label for="password"><b><i>Password</i></b></label>
-                        <input type="password" placeholder="Enter your Password" name="password-login"
-                            id="password-login" required>
-                        <!-- Password -->
-                        <label for="age"><b><i>Age</i></b></label>
-                        <input type="age" placeholder="Enter your age" name="age-login" id="age-login" required>
+                        <label for="passwordLogin"><b><i>Password</i></b></label>
+                        <input type="password" placeholder="Enter your Password" name="passwordLogin" id="passwordLogin"
+                            required>
                         <button type="submit" class="loginbtn">Login</button>
                     </div>
                 </form>

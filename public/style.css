@@ -93,7 +93,8 @@ main {
 }
 
 #login-text {
-    padding-top: 20px;
+    padding-top: 1  0px;
+    padding-bottom: 10px;
 }
 
 /* Add padding to containers */
@@ -130,8 +131,8 @@ hr {
 .loginbtn {
     background-color: #04AA6D;
     color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
+    padding: 15px 20px;
+    margin: 0px 0;
     border: none;
     cursor: pointer;
     width: 100%;
@@ -151,6 +152,16 @@ hr {
     margin-bottom: 15px;
     display: none;
 }
+
+.alertLogin {
+    padding: 20px;
+    background-color: #f44336;
+    /* Red */
+    color: white;
+    margin-bottom: 15px;
+    display: none;
+}
+
 
 /* Add a close button */
 .closebtn {
