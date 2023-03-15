@@ -75,6 +75,7 @@ loginForm.addEventListener('submit', (event) => {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onload = () => {
         if (xhr.status === 200) {
+            console.log(xhr.responseText);
             const response = JSON.parse(xhr.responseText);
             if (response.status === 'success') {
                 alertBoxLogin.style.display = "block";
@@ -96,6 +97,7 @@ loginForm.addEventListener('submit', (event) => {
                 alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Email does not exist.';
             }
         } else {
+            console.log(xhr.status);
             alertBoxLogin.style.display = "block";
             alertBoxLogin.style.backgroundColor = '#f44336';
             alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Invalid Credentials.';
