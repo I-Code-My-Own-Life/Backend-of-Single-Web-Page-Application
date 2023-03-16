@@ -41,16 +41,30 @@ app.use(bodyParser.json());
 
 app.set("view engine", "ejs");
 
+// Main index page : 
 app.get("/", (req, res) => {
-    res.render("index",{name:req.session.username});
+    res.render("index", { name: req.session.username });
 })
 
+// Home page (Just for testing purposes) : 
 app.get("/home", (req, res) => {
     if (!req.session.userId) {
         res.redirect('/');
     } else {
         res.status(200).send("You are on the home page." + req.session.username)
     }
+})
+
+// Logout page : 
+app.get("/logout", (req, res) => {
+    // Clear the session data and redirect to the home page
+    req.session.destroy(err => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/");
+        }
+    });
 })
 
 // Registering and logging in the user : 
@@ -113,7 +127,7 @@ app.post("/", async (req, res) => {
                         if (isMatch) {
                             req.session.userId = results[0].id;
                             req.session.username = results[0].name;
-                            res.status(200).json({ status: "success"});
+                            res.status(200).json({ status: "success" });
                         } else {
                             res.status(200).json({ status: "wrong_password" });
                         }

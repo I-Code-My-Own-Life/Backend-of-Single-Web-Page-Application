@@ -93,7 +93,7 @@ main {
 }
 
 #login-text {
-    padding-top: 1  0px;
+    padding-top: 1 0px;
     padding-bottom: 10px;
 }
 
@@ -185,3 +185,19 @@ a {
     background-color: #f1f1f1;
     text-align: center;
 }
+
+#logout {
+    background-color: #e94d42;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: 0.2px solid #ff1100;
+    border-radius: 10px;
+}
+
+#logout:hover, #logout:active {
+    background-color: red;
+    transition: all 0.5s;
+  }
