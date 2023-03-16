@@ -82,6 +82,9 @@ loginForm.addEventListener('submit', (event) => {
                 alertBoxLogin.style.backgroundColor = '#f44336';
                 alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Success!</strong> User logged in.';
                 event.target.reset();
+                setTimeout(()=>{
+                    location.reload();
+                },1000)
             } else if (response.status === 'wrong_password') {
                 alertBoxLogin.style.display = "block";
                 alertBoxLogin.style.backgroundColor = '#f44336';

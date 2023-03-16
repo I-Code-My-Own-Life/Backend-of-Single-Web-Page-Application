@@ -33,7 +33,11 @@
         <section class="pages">
             <div class="page is-active" data-page="1">
                 <h2>Page 1</h2>
-                <p>Welcome to the home page.</p>
+                <% if (typeof name !== "undefined") { %>
+                    <p>Welcome, <%= name %>!</p>
+                  <% } else { %>
+                    <p>Please log in to continue.</p>
+                  <% } %>
             </div>
             <div class="page" data-page="2">
                 <h2>Page 2</h2>
@@ -43,9 +47,9 @@
                 <h2>Page 3</h2>
                 <p>Welcome to the grade calculator page.</p>
             </div>
-            {{!-- Login page and registration page --}}
+            <!-- {{!-- Login page and registration page --}} -->
             <div id="login-reg" class="page" data-page="4">
-                {{!-- Registration alert :  --}}
+                <!-- {{!-- Registration alert :  --}} -->
                 <div class="alert">
                     <span class="closebtn" onclick="closeAlert()">&times;</span>
                     This is a dismissible alert.
@@ -71,8 +75,8 @@
                     </div>
                 </form>
                 <h1 id="login-text">Login</h1>
-                {{!-- Login alert :  --}}
-                 <div class="alertLogin">
+                <!-- {{!-- Login alert :  --}} -->
+                <div class="alertLogin">
                     <span class="closebtn" onclick="closeAlert()">&times;</span>
                     This is a dismissible alert.
                 </div>
