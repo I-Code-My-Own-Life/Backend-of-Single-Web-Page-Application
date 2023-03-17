@@ -22,6 +22,8 @@ function Switch_page(id) {
 const alertBox = document.querySelector('.alert');
 // Login alert box : 
 const alertBoxLogin = document.querySelector('.alertLogin');
+// Account info edit alert : 
+const alertAccountEdit = document.getElementById("alertAccountEdit");
 // Function to close the alert
 function closeAlert() {
     alert.style.display = 'none';
@@ -62,7 +64,7 @@ form.addEventListener('submit', (event) => {
     xhr.send(JSON.stringify(Object.fromEntries(formData)));
 });
 
-// Get the registration form 
+// Get the login form 
 const loginForm = document.querySelector('#login-form');
 
 // Adding event listener to login form : 
@@ -82,9 +84,9 @@ loginForm.addEventListener('submit', (event) => {
                 alertBoxLogin.style.backgroundColor = '#f44336';
                 alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Success!</strong> User logged in.';
                 event.target.reset();
-                setTimeout(()=>{
+                setTimeout(() => {
                     location.reload();
-                },1000)
+                }, 1000)
             } else if (response.status === 'wrong_password') {
                 alertBoxLogin.style.display = "block";
                 alertBoxLogin.style.backgroundColor = '#f44336';
@@ -108,3 +110,46 @@ loginForm.addEventListener('submit', (event) => {
     };
     xhr.send(JSON.stringify(Object.fromEntries(formData)));
 });
+
+// Getting account_info form : 
+const account_info_form = document.getElementById("account_info_form");
+
+// Adding event listener to account info edit form : 
+account_info_form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(account_info_form);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = () => {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.status === 'success') {
+                alertAccountEdit.style.display = "block";
+                alertAccountEdit.style.backgroundColor = '#f44336';
+                alertAccountEdit.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Changes successful!</strong> Please log out and sign in again .';
+                event.target.reset();
+            } else if (response.status === 'wrong_password') {
+                alertBoxLogin.style.display = "block";
+                alertBoxLogin.style.backgroundColor = '#f44336';
+                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error occured!</strong> Wrong password';
+            } else if (response.status === 'error') {
+                alertBoxLogin.style.display = "block";
+                alertBoxLogin.style.backgroundColor = '#f44336';
+                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error occured !</strong> Please try again.';
+            } else if (response.status === 'email_does_not_exist') {
+                alertBoxLogin.style.display = "block";
+                alertBoxLogin.style.backgroundColor = '#f44336';
+                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Email does not exist.';
+            }
+        }
+        else {
+            alertBoxLogin.style.display = "block";
+            alertBoxLogin.style.backgroundColor = '#f44336';
+            alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Invalid Credentials.';
+        }
+    };
+
+    xhr.send(JSON.stringify(Object.fromEntries(formData)));
+})

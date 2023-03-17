@@ -43,7 +43,7 @@ app.set("view engine", "ejs");
 
 // Main index page : 
 app.get("/", (req, res) => {
-    res.render("index", { name: req.session.username });
+    res.render("index", { name: req.session.username, email: req.session.email, password: req.session.password, age: req.session.age });
 })
 
 // Home page (Just for testing purposes) : 
@@ -51,7 +51,7 @@ app.get("/home", (req, res) => {
     if (!req.session.userId) {
         res.redirect('/');
     } else {
-        res.status(200).send("You are on the home page." + req.session.username)
+        res.status(200).send("You are on the home page." + req.session.username);
     }
 })
 
@@ -67,7 +67,7 @@ app.get("/logout", (req, res) => {
     });
 })
 
-// Registering and logging in the user : 
+// Registering and logging in the user ( Main page ): 
 app.post("/", async (req, res) => {
     // Registering the user :
     const { name, email, password, age } = req.body;
@@ -107,6 +107,30 @@ app.post("/", async (req, res) => {
             }
         );
     }
+    // If you are requesting to edit the account info : 
+    else if (req.body['name-edit'] != undefined) {
+        const age = req.body['age-edit'];
+        const nameE = req.body['name-edit'];
+        const emailE = req.body['email-edit'];
+        const passwordE = req.body['password-edit'];
+        // Hashing the password : 
+        const saltRounds = 10;
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashedPassword = await bcrypt.hash(passwordE, salt);
+        const updateQuery = `UPDATE information SET password = '${hashedPassword}', name = '${nameE}', email = '${emailE}'  WHERE id = ${req.session.userId}`;
+        connection.query(updateQuery, (err, results) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error registering user');
+            }
+            else {
+                res.status(200).json({ status: 'success' });
+                req.session.username = nameE;
+                req.session.email = emailE;
+                req.session.password = passwordE;
+            }
+        })
+    }
     // If not then login the user (We will authenticate the user here ) : 
     else {
         const email = req.body.emailLogin;
@@ -127,6 +151,9 @@ app.post("/", async (req, res) => {
                         if (isMatch) {
                             req.session.userId = results[0].id;
                             req.session.username = results[0].name;
+                            req.session.email = results[0].email;
+                            req.session.password = password;
+                            req.session.age = results[0].age;
                             res.status(200).json({ status: "success" });
                         } else {
                             res.status(200).json({ status: "wrong_password" });
@@ -139,6 +166,7 @@ app.post("/", async (req, res) => {
         );
     }
 });
+
 
 app.listen(port, () => {
     console.log(`The server has been started at port ${port}`);

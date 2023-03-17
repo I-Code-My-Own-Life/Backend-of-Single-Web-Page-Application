@@ -143,6 +143,10 @@ hr {
     opacity: 1;
 }
 
+.loginbtn:hover {
+    opacity: 1;
+}
+
 /* Styling the alert box */
 .alert {
     padding: 20px;
@@ -162,6 +166,15 @@ hr {
     display: none;
 }
 
+
+#alertAccountEdit {
+    padding: 20px;
+    background-color: #f44336;
+    /* Red */
+    color: white;
+    margin-bottom: 15px;
+    display: none;
+}
 
 /* Add a close button */
 .closebtn {
@@ -194,10 +207,33 @@ a {
     text-decoration: none;
     display: inline-block;
     border: 0.2px solid #ff1100;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
-#logout:hover, #logout:active {
+#logout:hover,
+#logout:active {
     background-color: red;
     transition: all 0.5s;
-  }
+}
+
+/* Styling the My Account page :  */
+#text {
+    text-align: center;
+}
+
+#editbtn {
+    background-color: #120fe2;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 40%;
+    border: none;
+    cursor: pointer;
+    width: 15%;
+    opacity: 0.9;
+    border-radius: 5px;
+}
+
+#editbtn:hover {
+    transition: all 0.5s;
+    opacity: 10;
+}
