@@ -237,3 +237,37 @@ a {
     transition: all 0.5s;
     opacity: 10;
 }
+
+/*     Styling the dashboard page here :     */
+.task-handler{
+    margin: 30px;
+    width: 28%;
+    height: 28rem;
+    border: 2px solid black;
+    padding: 15px;
+    position: relative;
+}
+
+.tasks{
+    display: flex;
+    justify-content: space-around;
+}
+
+.addTaskBtn{
+    position: absolute;
+    bottom: 20px;
+    margin-left: 30%;
+    width: 100px;
+    height: 40px;
+    background-color: #30d5e0;
+    border-radius: 8px;
+    border: 0.2px solid #12b1bd;
+    cursor:pointer;
+    opacity: 0.78;
+    font-size: 14px;
+}
+
+.addTaskBtn:hover{
+    opacity: 1;
+    transition: all 0.5s;
+}

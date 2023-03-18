@@ -121,8 +121,6 @@ account_info_form.addEventListener("submit", (event) => {
     let obj = Object.fromEntries(formData);
     for (const key in obj) {
         if (obj[key] == "") {
-            let inp = document.getElementById(key);
-            inp.value = inp.placeholder;
             updateData = false;
         }
         else {
@@ -167,7 +165,6 @@ account_info_form.addEventListener("submit", (event) => {
             }
             
         }
-        console.log(obj);
         xhr.send(JSON.stringify(obj));
     }
     else {

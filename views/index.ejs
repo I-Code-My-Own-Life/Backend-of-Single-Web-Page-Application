@@ -39,13 +39,28 @@
                 <h2>Page 1</h2>
                 <% if (typeof name !=="undefined" ) { %>
                     <p>Welcome, <%= name %>!</p>
-                <% } else { %>
-                    <p>Please log in to continue.</p>
-                <% } %>
+                    <% } else { %>
+                        <p>Please log in to continue.</p>
+                        <% } %>
             </div>
             <div class="page" data-page="2">
-                <h2>Page 2</h2>
-                <p>Welcome to the dashboard page.</p>
+                <div class="tasks">
+                    <!-- Homework tasks :  -->
+                    <div class="task-handler" id="homework">
+                        <h2 style="text-align: center; font-weight: 200;">Homework</h2>
+                        <button class="addTaskBtn">Add Task</button>
+                    </div>
+                    <!-- Coursework tasks :  -->
+                    <div class="task-handler" id="coursework">
+                        <h2 style="text-align: center;font-weight: 200;">Coursework</h2>
+                        <button class="addTaskBtn">Add Task</button>
+                    </div>
+                    <!-- Exam taks :  -->
+                    <div class="task-handler" id="exam">
+                        <h2 style="text-align: center;font-weight: 200;">Exams</h2>
+                        <button class="addTaskBtn">Add Task</button>
+                    </div>
+                </div>
             </div>
             <div class="page" data-page="3">
                 <h2>Page 3</h2>
