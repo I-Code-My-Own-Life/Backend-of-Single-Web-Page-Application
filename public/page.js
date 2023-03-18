@@ -113,43 +113,66 @@ loginForm.addEventListener('submit', (event) => {
 
 // Getting account_info form : 
 const account_info_form = document.getElementById("account_info_form");
-
+let updateData = true;
 // Adding event listener to account info edit form : 
 account_info_form.addEventListener("submit", (event) => {
     event.preventDefault();
-    const formData = new FormData(account_info_form);
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/');
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = () => {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            if (response.status === 'success') {
-                alertAccountEdit.style.display = "block";
-                alertAccountEdit.style.backgroundColor = '#f44336';
-                alertAccountEdit.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Changes successful!</strong> Please log out and sign in again .';
-                event.target.reset();
-            } else if (response.status === 'wrong_password') {
-                alertBoxLogin.style.display = "block";
-                alertBoxLogin.style.backgroundColor = '#f44336';
-                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error occured!</strong> Wrong password';
-            } else if (response.status === 'error') {
-                alertBoxLogin.style.display = "block";
-                alertBoxLogin.style.backgroundColor = '#f44336';
-                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error occured !</strong> Please try again.';
-            } else if (response.status === 'email_does_not_exist') {
-                alertBoxLogin.style.display = "block";
-                alertBoxLogin.style.backgroundColor = '#f44336';
-                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Email does not exist.';
-            }
+    let formData = new FormData(account_info_form);
+    let obj = Object.fromEntries(formData);
+    for (const key in obj) {
+        if (obj[key] == "") {
+            let inp = document.getElementById(key);
+            inp.value = inp.placeholder;
+            updateData = false;
         }
         else {
-            alertBoxLogin.style.display = "block";
-            alertBoxLogin.style.backgroundColor = '#f44336';
-            alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Invalid Credentials.';
+            updateData = true;
+            break;
         }
-    };
-
-    xhr.send(JSON.stringify(Object.fromEntries(formData)));
+    }
+    formData = new FormData(account_info_form);
+    if (updateData) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.status === 'success') {
+                    alertAccountEdit.style.display = "block";
+                    alertAccountEdit.style.backgroundColor = '#f44336';
+                    alertAccountEdit.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Changes successful!</strong> Please log out and sign in again .';
+                    event.target.reset();
+                } else if (response.status === 'error') {
+                    alertAccountEdit.style.display = "block";
+                    alertAccountEdit.style.backgroundColor = '#f44336';
+                    alertAccountEdit.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Email already exists! </strong>Choose another one ';
+                } else if (response.status === 'email_already_exists') {
+                    alertAccountEdit.style.display = "block";
+                    alertAccountEdit.style.backgroundColor = '#f44336';
+                    alertAccountEdit.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Email already exists! </strong>Choose another one ';
+                }
+            }
+            else {
+                alertBoxLogin.style.display = "block";
+                alertBoxLogin.style.backgroundColor = '#f44336';
+                alertBoxLogin.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><strong>Error!</strong> Invalid Credentials.';
+            }
+        };
+        obj = Object.fromEntries(formData);
+        for (const key in obj) {
+            if (obj[key] == "") {
+                let inp = document.getElementById(key);
+                obj[key] = inp.placeholder;
+            }
+            
+        }
+        console.log(obj);
+        xhr.send(JSON.stringify(obj));
+    }
+    else {
+        alertAccountEdit.style.display = "block";
+        alertAccountEdit.style.backgroundColor = '#f44336';
+        alertAccountEdit.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Enter the details that you want to change. </strong>';
+    }
 })

@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 
 app.set("view engine", "ejs");
 
-// Main index page : 
+// Loading the single html page : 
 app.get("/", (req, res) => {
     res.render("index", { name: req.session.username, email: req.session.email, password: req.session.password, age: req.session.age });
 })
@@ -120,8 +120,7 @@ app.post("/", async (req, res) => {
         const updateQuery = `UPDATE information SET password = '${hashedPassword}', name = '${nameE}', email = '${emailE}'  WHERE id = ${req.session.userId}`;
         connection.query(updateQuery, (err, results) => {
             if (err) {
-                console.error(err);
-                res.status(500).send('Error registering user');
+                res.status(200).json({ status: 'error' });
             }
             else {
                 res.status(200).json({ status: 'success' });
