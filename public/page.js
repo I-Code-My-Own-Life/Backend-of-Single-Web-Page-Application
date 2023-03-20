@@ -163,7 +163,7 @@ account_info_form.addEventListener("submit", (event) => {
                 let inp = document.getElementById(key);
                 obj[key] = inp.placeholder;
             }
-            
+
         }
         xhr.send(JSON.stringify(obj));
     }
@@ -173,3 +173,90 @@ account_info_form.addEventListener("submit", (event) => {
         alertAccountEdit.innerHTML = '<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> <strong>Enter the details that you want to change. </strong>';
     }
 })
+
+// Handling the task storing management :
+// Getting the button to add task in the dashboard page : 
+const addTaskBtnHome = document.getElementById('addTaskBtnHome');
+// Getting the homework task column : 
+const homework = document.getElementById("homework");
+// Getting the form that stores task description in the database :
+const addTaskDBForm = document.getElementById('addTaskDBForm');
+// Get the modal element
+let modal = document.getElementById("alert-modal");
+// Get the <span> element that closes the modal
+let span = document.getElementsByClassName("close")[0];
+
+addTaskBtnHome.addEventListener("click", () => {
+    modal.style.display = "block";
+})
+
+span.addEventListener("click", () => {
+    // Animation to close the modal : 
+    closeModal();
+})
+
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener("click", (event) => {
+    // Animation to close the modal : 
+    if (event.target == modal) {
+        closeModal();
+    }
+})
+
+// Now adding task in the database : 
+addTaskDBForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    let formData = new FormData(addTaskDBForm);
+    let obj = Object.fromEntries(formData);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = () => {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.status === 'success') {
+                event.target.reset();
+                // Closing the modal : 
+                closeModal();
+                setTimeout(()=>{
+                    location.reload();
+                },500)
+            }
+            else if (response.status === 'wrong_password') {
+                window.alert("There was an error");
+            }
+        }
+        else {
+            window.alert("There was an error");
+        }
+    };
+    xhr.send(JSON.stringify(obj));
+})
+
+
+function closeModal() {
+    modal.classList.remove("fade-in");
+    modal.classList.add("fade-out");
+    setTimeout(function () {
+        modal.style.display = "none";
+        modal.classList.remove("fade-out");
+    }, 300);
+}
+
+function addTask() {
+    // First creating the div that will have the label and input tags :
+    let div = document.createElement("div");
+    div.classList.add("task-elements");
+    // Then creating the label and input tags :
+    // Label tag :
+    let label = document.createElement("label");
+    label.innerText = obj.taskDescription;
+    // Input tag :
+    let input = document.createElement("input");
+    input.type = "checkbox";
+    // Appending them to the div tag :
+    div.appendChild(label);
+    div.appendChild(input);
+    // Appending the div to the document : 
+    homework.appendChild(div);
+}

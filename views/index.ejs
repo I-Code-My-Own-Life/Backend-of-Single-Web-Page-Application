@@ -10,7 +10,17 @@
 </head>
 
 <body>
-
+    <!-- Modal alert :  -->
+    <div id="alert-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="/" method="post" id="addTaskDBForm">
+                <label for="taskDescription">Task Description</label>
+                <input placeholder="Minimum 40 characters" type="text" id="taskDescription" name="taskDescription">
+                <button id="addTaskDBbtn" type="submit">Add task</button>
+            </form>
+        </div>
+    </div>
     <div class="logo">
         <!-- <h1 class="logo-text">Logo</h1> -->
         <img src="/Assets/39f5fdbe34f1b58716e6571c1f1cb715.jpg" alt="">
@@ -25,9 +35,9 @@
                     <li class="tab"><a data-switcher data-tab="3">Grade Calculator</a></li>
                     <% if (typeof name=="undefined" ) { %>
                         <li class="tab"><a data-switcher data-tab="4">Login/Register</a></li>
-                        <% } else { %>
-                            <li class="tab"><a data-switcher data-tab="5">My Account</a></li>
-                            <% } %>
+                    <% } else { %>
+                        <li class="tab"><a data-switcher data-tab="5">My Account</a></li>
+                    <% } %>
                 </ul>
             </nav>
         </div>
@@ -48,7 +58,13 @@
                     <!-- Homework tasks :  -->
                     <div class="task-handler" id="homework">
                         <h2 style="text-align: center; font-weight: 200;">Homework</h2>
-                        <button class="addTaskBtn">Add Task</button>
+                        <% for (var i = 0; i < tasks.length; i++) { %>
+                            <div class="task-elements">
+                              <label class="label"><%= tasks[i].taskDescription %></label>
+                              <input type="checkbox">
+                            </div>
+                          <% } %>
+                        <button class="addTaskBtn" id="addTaskBtnHome">Add Task</button>
                     </div>
                     <!-- Coursework tasks :  -->
                     <div class="task-handler" id="coursework">

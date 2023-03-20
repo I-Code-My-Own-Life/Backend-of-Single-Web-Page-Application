@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const util = require('util');
+const { createConnection } = require("net");
 
 const port = 5000;
 const app = express();
@@ -20,7 +21,21 @@ const dbConfig = {
     database: process.env.DATABASE,
 }
 
-const connection = mysql.createConnection(dbConfig);
+const dbConfig2 = {
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE2,
+}
+
+console.log(dbConfig2);
+
+// Connecting to the tasks database : 
+let connection = mysql.createConnection(dbConfig2);
+
+connection.connect(()=>{
+    // console.log("Connecting to the database.");
+})
 
 const publicDirectory = path.join(__dirname, "./public");
 
@@ -43,7 +58,16 @@ app.set("view engine", "ejs");
 
 // Loading the single html page : 
 app.get("/", (req, res) => {
-    res.render("index", { name: req.session.username, email: req.session.email, password: req.session.password, age: req.session.age });
+    // Now fetching the records who have type homeTask in them and sending them to the frontend so that they can be displayed in the homework column :
+    const fetchSql = "SELECT * FROM taskinformation WHERE type = 'homeTask'";
+    connection.query(fetchSql, (error, results, fields) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('Error searching tasks');
+        } else {
+            res.render("index", { name: req.session.username, email: req.session.email, password: req.session.password, age: req.session.age ,tasks:results});
+        }
+    });
 })
 
 // Home page (Just for testing purposes) : 
@@ -69,6 +93,11 @@ app.get("/logout", (req, res) => {
 
 // Registering and logging in the user ( Main page ): 
 app.post("/", async (req, res) => {
+    // Connecting to the database : 
+    let connection = mysql.createConnection(dbConfig);
+    connection.connect(() => {
+        // console.log("Again connecting to the login-reg database.")
+    })
     // Registering the user :
     const { name, email, password, age } = req.body;
     // If the third argument is given then register the user : 
@@ -129,6 +158,32 @@ app.post("/", async (req, res) => {
                 req.session.password = passwordE;
             }
         })
+    }
+    // If you want to add a task :
+    else if (req.body.hasOwnProperty("taskDescription")) {
+        connection.end();
+        connection = mysql.createConnection(dbConfig2);
+        connection.connect((err) => {
+            if (err) {
+                console.error('Error connecting to MySQL database: ' + err.stack);
+            }
+            // console.log('Connected to MySQL database with threadId: ' + connection.threadId);
+        });
+        let taskDescription = req.body['taskDescription']
+        let taskDone = 'false';
+        let type = 'homeTask';
+        // Inserting the task description and some more things in the database :
+        connection.query('INSERT INTO taskinformation (taskDescription, taskDone, type) VALUES (?, ?, ?)', [taskDescription, taskDone, type],
+            (error, results) => {
+                if (error) {
+                    console.error(error);
+                    res.status(500).send('Error registering user');
+                } else {
+                    console.log("Records inserted successfully.");
+                    res.status(200).json({ status: "success" });
+                }
+            }
+        );
     }
     // If not then login the user (We will authenticate the user here ) : 
     else {

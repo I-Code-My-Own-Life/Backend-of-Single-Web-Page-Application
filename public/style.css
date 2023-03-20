@@ -239,21 +239,23 @@ a {
 }
 
 /*     Styling the dashboard page here :     */
-.task-handler{
+.task-handler {
     margin: 30px;
     width: 28%;
-    height: 28rem;
+    height: max-content;
     border: 2px solid black;
     padding: 15px;
     position: relative;
+    min-height: 28rem;
+    padding: 10px 0 10px 0 ;
 }
 
-.tasks{
+.tasks {
     display: flex;
     justify-content: space-around;
 }
 
-.addTaskBtn{
+.addTaskBtn {
     position: absolute;
     bottom: 20px;
     margin-left: 30%;
@@ -262,12 +264,140 @@ a {
     background-color: #30d5e0;
     border-radius: 8px;
     border: 0.2px solid #12b1bd;
-    cursor:pointer;
+    cursor: pointer;
     opacity: 0.78;
     font-size: 14px;
 }
 
-.addTaskBtn:hover{
+.addTaskBtn:hover {
     opacity: 1;
     transition: all 0.5s;
+}
+
+#addTaskDBbtn {
+    width: 100px;
+    height: 40px;
+    background-color: #30d5e0;
+    border-radius: 8px;
+    border: 0.2px solid #12b1bd;
+    cursor: pointer;
+    opacity: 0.78;
+    font-size: 14px;
+}
+
+.addTaskBtnHome {
+    margin-left: 30%;
+    width: 100px;
+    height: 40px;
+    background-color: #30d5e0;
+    border-radius: 8px;
+    border: 0.2px solid #12b1bd;
+    cursor: pointer;
+    opacity: 0.78;
+    font-size: 14px;
+}
+
+#addTaskBtnHome:hover {
+    opacity: 1;
+    transition: all 0.5s;
+}
+
+.task-elements {
+    margin: 5px;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 3px 5px 3px;
+}
+
+/* Designing the modal alert :  */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefee7;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    animation-name: slideIn;
+    animation-duration: 0.3s;
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.label{
+    width:250px;
+    overflow: hidden;
+}
+
+/* Fade-in animation */
+.fade-in {
+    animation-name: fadeIn;
+}
+
+/* Fade-out animation */
+.fade-out {
+    animation-name: fadeOut;
+}
+
+/* Fade-out animation */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+/* Slide-in animation */
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+#taskDescription {
+    background-color: rgb(219, 211, 211);
 }
