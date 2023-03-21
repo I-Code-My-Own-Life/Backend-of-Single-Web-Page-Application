@@ -21,11 +21,20 @@
             </form>
         </div>
     </div>
+    <!-- Modal alert for saving checkbox input :  -->
+    <div id="alert-modal2" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 style="text-align:center; font-weight: 50; color: red;">Saving your completed tasks</h2>
+            <h3
+                style="text-align:center; font-weight: 50; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin-top: 15px;">
+                Please Wait....</h3>
+        </div>
+    </div>
     <div class="logo">
         <!-- <h1 class="logo-text">Logo</h1> -->
         <img src="/Assets/39f5fdbe34f1b58716e6571c1f1cb715.jpg" alt="">
     </div>
-
     <header>
         <div class="navbar">
             <nav>
@@ -35,9 +44,9 @@
                     <li class="tab"><a data-switcher data-tab="3">Grade Calculator</a></li>
                     <% if (typeof name=="undefined" ) { %>
                         <li class="tab"><a data-switcher data-tab="4">Login/Register</a></li>
-                    <% } else { %>
-                        <li class="tab"><a data-switcher data-tab="5">My Account</a></li>
-                    <% } %>
+                        <% } else { %>
+                            <li class="tab"><a data-switcher data-tab="5">My Account</a></li>
+                            <% } %>
                 </ul>
             </nav>
         </div>
@@ -46,43 +55,118 @@
     <main>
         <section class="pages">
             <div class="page is-active" data-page="1">
-                <h2>Page 1</h2>
+                <!-- Displaying welcome user when the user is logged in :  -->
                 <% if (typeof name !=="undefined" ) { %>
-                    <p>Welcome, <%= name %>!</p>
-                    <% } else { %>
-                        <p>Please log in to continue.</p>
-                        <% } %>
+                    <h1 style="margin:20px; font-size: 23px; color:rgba(255, 0, 0, 0.747) ;">Welcome, <%= name %>!</h1>
+                <% } %>
+                <div class="content">
+                    <p style="margin-top: 200px; margin-left: 10%; width: 30%; display: inline-block;">Lorem ipsum dolor
+                        sit amet consectetur adipisicing elit. Accusamus aliquid ab placeat eveniet fuga natus
+                        voluptatem eligendi hic a, nihil, inventore odit recusandae molestiae error similique
+                        dignissimos vitae cumque cupiditate?
+                    </p>
+                    <img id="img1" src="/Assets/study4.jpg" alt="">
+                </div>
+                <div class="content2">
+                    <div class="suggestions">
+                        <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study1.jpg" alt="">
+                        <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study2.jpg" alt="">
+                        <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study3.jpg" alt="">
+                    </div>
+                    <div class="headings">
+                        <h2 style="text-align: center" >Plan your studies</h2>
+                        <h2 style="text-align: center">Stay focused</h2>
+                        <h2 style="text-align: center" >Organize your work</h2>
+                    </div>
+                    <div class="text">
+                        <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">Lorem ipsum dolor
+                            sit amet consectetur adipisicing elit. Accusamus aliquid ab placeat eveniet fuga natus
+                            voluptatem eligendi hic a, nihil, inventore odit recusandae molestiae error similique
+                            dignissimos vitae cumque cupiditate?
+                        </p>
+                        <p style="text-align: center; margin-top: 15px; width: 270px;  display: inline-block;">Lorem ipsum dolor
+                            sit amet consectetur adipisicing elit. Accusamus aliquid ab placeat eveniet fuga natus
+                            voluptatem eligendi hic a, nihil, inventore odit recusandae molestiae error similique
+                            dignissimos vitae cumque cupiditate?
+                        </p>
+                        <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">Lorem ipsum dolor
+                            sit amet consectetur adipisicing elit. Accusamus aliquid ab placeat eveniet fuga natus
+                            voluptatem eligendi hic a, nihil, inventore odit recusandae molestiae error similique
+                            dignissimos vitae cumque cupiditate?
+                        </p>
+                    </div>
+                </div>
+                <div class="content3">
+                    <h1 style="width:280px; position: absolute; top: 180px; left: 150px; font-size: 26px;">Sign up now to get the most out of your studies</h1>
+                    <!-- <a id="btnForSignUp" data-switcher data-tab="4">Sign Up</a> -->
+                    <button id="btnForSignUp">Sign Up</button>
+                </div>
+                <div class="footer">
+                </div>
             </div>
+            <!-- Task management page :  -->
             <div class="page" data-page="2">
                 <div class="tasks">
                     <!-- Homework tasks :  -->
                     <div class="task-handler" id="homework">
                         <h2 style="text-align: center; font-weight: 200;">Homework</h2>
-                        <% for (var i = 0; i < tasks.length; i++) { %>
-                            <div class="task-elements">
-                              <label class="label"><%= tasks[i].taskDescription %></label>
-                              <input type="checkbox">
-                            </div>
-                          <% } %>
-                        <button class="addTaskBtn" id="addTaskBtnHome">Add Task</button>
+                        <% for (var i=0; i < tasks.length; i++) { %>
+                            <% if (tasks[i].type==="homeTask" ) { %>
+                                <div class="task-elements">
+                                    <label class="label">
+                                        <%= tasks[i].taskDescription %>
+                                    </label>
+                                    <input type="checkbox" value="<%= tasks[i].taskid %>"
+                                        name="<%= tasks[i].taskDone %>">
+                                </div>
+                                <% } %>
+                                    <% } %>
+                                        <button class="addTaskBtn" id="addTaskBtnHome">New</button>
                     </div>
                     <!-- Coursework tasks :  -->
                     <div class="task-handler" id="coursework">
                         <h2 style="text-align: center;font-weight: 200;">Coursework</h2>
-                        <button class="addTaskBtn">Add Task</button>
+                        <% for (var i=0; i < tasks.length; i++) { %>
+                            <% if (tasks[i].type==="courseTask" ) { %>
+                                <div class="task-elements">
+                                    <label class="label">
+                                        <%= tasks[i].taskDescription %>
+                                    </label>
+                                    <input type="checkbox" value="<%= tasks[i].taskid %>"
+                                        name="<%= tasks[i].taskDone %>">
+                                </div>
+                                <% } %>
+                                    <% } %>
+                                        <button class="addTaskBtn" id="addTaskBtnCourse">New</button>
                     </div>
                     <!-- Exam taks :  -->
                     <div class="task-handler" id="exam">
                         <h2 style="text-align: center;font-weight: 200;">Exams</h2>
-                        <button class="addTaskBtn">Add Task</button>
+                        <% for (var i=0; i < tasks.length; i++) { %>
+                            <% if (tasks[i].type==="examTask" ) { %>
+                                <div class="task-elements">
+                                    <label class="label">
+                                        <%= tasks[i].taskDescription %>
+                                    </label>
+                                    <input type="checkbox" value="<%= tasks[i].taskid %>"
+                                        name="<%= tasks[i].taskDone %>">
+                                </div>
+                                <% } %>
+                                    <% } %>
+                                        <button class="addTaskBtn" id="addTaskBtnExam">New</button>
                     </div>
                 </div>
+                <button id="saveTaskDone">Save</button>
             </div>
+            <!-- Grade Calculator page :  -->
             <div class="page" data-page="3">
-                <h2>Page 3</h2>
-                <p>Welcome to the grade calculator page.</p>
+                <div>
+                    <h1 style="font-size: 30px; margin-top: 20px; text-align: center; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;">Grade Calculator</h1>
+                    <br>
+                    <div class="hr"></div>
+                </div>
             </div>
-            <!-- {{!-- Login page and registration page --}} -->
+            <!---- Login page and registration page ---->
             <div id="login-reg" class="page" data-page="4">
                 <!-- {{!-- Registration alert :  --}} -->
                 <div class="alert">
@@ -166,3 +250,10 @@
 <!-- Dashboard
 Grade Calculator
 Login/Register -->
+
+
+
+<!-- Code which checks whether or not you are logged in or not :  -->
+
+<!-- 
+

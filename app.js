@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const util = require('util');
-const { createConnection } = require("net");
 
 const port = 5000;
 const app = express();
@@ -18,24 +17,41 @@ const dbConfig = {
     host: process.env.HOST,
     user: process.env.USER,
     password: process.env.PASSWORD,
-    database: process.env.DATABASE,
 }
 
 const dbConfig2 = {
     host: process.env.HOST,
     user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE2,
+    password: process.env.PASSWORD
 }
-
-console.log(dbConfig2);
 
 // Connecting to the tasks database : 
 let connection = mysql.createConnection(dbConfig2);
 
-connection.connect(()=>{
-    // console.log("Connecting to the database.");
-})
+// Query to create the usertasks database and the table in it : 
+connection.query('CREATE DATABASE IF NOT EXISTS `usertasks`', (error, results) => {
+    if (error) {
+        console.log(error);
+    }
+    else {
+        // console.log("Database was created");
+        connection.query('CREATE TABLE IF NOT EXISTS `taskinformation` ( `taskid` INT NOT NULL AUTO_INCREMENT , `taskDescription` VARCHAR(100) NOT NULL , `taskDone` BOOLEAN NOT NULL , `type` VARCHAR(20) NOT NULL , PRIMARY KEY (`taskid`)) ENGINE = InnoDB', (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                // console.log("The table in the usertasks databaes was created");
+            }
+        })
+    }
+});
+
+connection.end();
+
+// Adding the database in the dbConfig to use : 
+dbConfig2['database'] = process.env.DATABASE2;
+// Again creating the connection :
+connection = mysql.createConnection(dbConfig2);
 
 const publicDirectory = path.join(__dirname, "./public");
 
@@ -58,14 +74,14 @@ app.set("view engine", "ejs");
 
 // Loading the single html page : 
 app.get("/", (req, res) => {
-    // Now fetching the records who have type homeTask in them and sending them to the frontend so that they can be displayed in the homework column :
-    const fetchSql = "SELECT * FROM taskinformation WHERE type = 'homeTask'";
+    // Now fetching the records from the database and sending them to the frontend so that they can be displayed in their respective columns :
+    const fetchSql = "SELECT * FROM taskinformation";
     connection.query(fetchSql, (error, results, fields) => {
         if (error) {
             console.error(error);
             res.status(500).send('Error searching tasks');
         } else {
-            res.render("index", { name: req.session.username, email: req.session.email, password: req.session.password, age: req.session.age ,tasks:results});
+            res.render("index", { name: req.session.username, email: req.session.email, password: req.session.password, age: req.session.age, tasks: results });
         }
     });
 })
@@ -95,9 +111,23 @@ app.get("/logout", (req, res) => {
 app.post("/", async (req, res) => {
     // Connecting to the database : 
     let connection = mysql.createConnection(dbConfig);
-    connection.connect(() => {
-        // console.log("Again connecting to the login-reg database.")
-    })
+    // Query to make table in the usertask database : 
+    connection.query('CREATE DATABASE IF NOT EXISTS `login-reg`', (error, results) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            connection.query('CREATE TABLE IF NOT EXISTS `information` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(30) NOT NULL , `email` VARCHAR(30) NOT NULL , `password` VARCHAR(255) NOT NULL , `age` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB', (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        }
+    });
+    connection.end();
+    // Again creating the connetion to the database : 
+    dbConfig['database'] = process.env.DATABASE;
+    connection = mysql.createConnection(dbConfig);
     // Registering the user :
     const { name, email, password, age } = req.body;
     // If the third argument is given then register the user : 
@@ -161,8 +191,8 @@ app.post("/", async (req, res) => {
     }
     // If you want to add a task :
     else if (req.body.hasOwnProperty("taskDescription")) {
-        connection.end();
         connection = mysql.createConnection(dbConfig2);
+        // Checking to see if the connection was successful : 
         connection.connect((err) => {
             if (err) {
                 console.error('Error connecting to MySQL database: ' + err.stack);
@@ -171,7 +201,7 @@ app.post("/", async (req, res) => {
         });
         let taskDescription = req.body['taskDescription']
         let taskDone = 'false';
-        let type = 'homeTask';
+        let type = req.body['type'];
         // Inserting the task description and some more things in the database :
         connection.query('INSERT INTO taskinformation (taskDescription, taskDone, type) VALUES (?, ?, ?)', [taskDescription, taskDone, type],
             (error, results) => {
@@ -179,11 +209,31 @@ app.post("/", async (req, res) => {
                     console.error(error);
                     res.status(500).send('Error registering user');
                 } else {
-                    console.log("Records inserted successfully.");
                     res.status(200).json({ status: "success" });
                 }
             }
         );
+    }
+    // Means if you want to save if you work is done or not : 
+    else if (req.body.hasOwnProperty("taskDoneArr")) {
+        connection.end();
+        connection = mysql.createConnection(dbConfig2);
+        let arr = req.body['taskDoneArr'];
+        // Looping through the array and running this update query to update all records : 
+        for (let i = 0; i < arr.length; i++) {
+            let currRecord = arr[i];
+            const updateQuery = `UPDATE taskinformation SET taskDone = ${currRecord.checked} WHERE taskid = ${currRecord.id}`;
+            connection.query(updateQuery, (err, results) => {
+                if (err) {
+                    // res.status(500).send("Error saving data !");
+                    console.log(err);
+                }
+                else {
+                    // console.log("Records being updated.");
+                }
+            })
+        }
+        res.json({ status: "success" });
     }
     // If not then login the user (We will authenticate the user here ) : 
     else {

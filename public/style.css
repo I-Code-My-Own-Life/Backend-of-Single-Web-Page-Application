@@ -62,8 +62,7 @@ header nav .tabs .tab.is-active a {
 }
 
 main {
-    padding-left: 20px;
-    padding-top: 40px;
+    padding-top: 15px;
 }
 
 .pages .page {
@@ -208,6 +207,7 @@ a {
     display: inline-block;
     border: 0.2px solid #ff1100;
     border-radius: 5px;
+    margin-left: 15px;
 }
 
 #logout:hover,
@@ -247,7 +247,7 @@ a {
     padding: 15px;
     position: relative;
     min-height: 28rem;
-    padding: 10px 0 10px 0 ;
+    padding: 10px 0 10px 0;
 }
 
 .tasks {
@@ -258,18 +258,38 @@ a {
 .addTaskBtn {
     position: absolute;
     bottom: 20px;
-    margin-left: 30%;
+    margin-left: 5%;
     width: 100px;
     height: 40px;
-    background-color: #30d5e0;
+    background-color: #04d9ffc0;
     border-radius: 8px;
-    border: 0.2px solid #12b1bd;
+    /* border: 0.2px solid #12bd76; */
+    border: none;
     cursor: pointer;
     opacity: 0.78;
     font-size: 14px;
 }
 
 .addTaskBtn:hover {
+    opacity: 1;
+    transition: all 0.5s;
+}
+
+#saveTaskDone {
+    position: absolute;
+    bottom: 10px;
+    right: 45%;
+    width: 100px;
+    height: 40px;
+    background-color: #04AA6D;
+    border-radius: 8px;
+    border: 0.2px solid #12bd4b;
+    cursor: pointer;
+    opacity: 0.78;
+    font-size: 14px;
+}
+
+#saveTaskDone:hover {
     opacity: 1;
     transition: all 0.5s;
 }
@@ -361,8 +381,8 @@ a {
     }
 }
 
-.label{
-    width:250px;
+.label {
+    width: 250px;
     overflow: hidden;
 }
 
@@ -400,4 +420,116 @@ a {
 
 #taskDescription {
     background-color: rgb(219, 211, 211);
+}
+
+/* Designing the home page : */
+
+.content {
+    display: flex;
+    justify-content: space-around;
+}
+
+#img1 {
+    /* object-fit: contain; */
+    margin-top: 130px;
+    width: 380px;
+    height: 310px;
+    border-radius: 20px;
+}
+
+.suggestions {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 80px;
+}
+
+.suggestions img {
+    border-radius: 6px;
+}
+
+.text {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.headings {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 15px;
+}
+
+.headings h2 {
+    width: 270px;
+    color: rgba(108, 42, 187, 0.92);
+    font-size: 20px;
+}
+
+.text p {
+    font-size: 15px;
+}
+
+.content2 {
+    background-color: #d1ece8a3;
+    border-radius: 4px;
+    height: 500px;
+}
+
+.content3 {
+    margin-top: 80px;
+    background-color: #d1ece8a3;
+    border-radius: 4px;
+    height: 500px;
+    position: relative;
+}
+
+.footer {
+    margin-top: 80px;
+    width: 100%;
+    height: 50px;
+    background: #04043f;
+    ;
+}
+
+/* #btnForSignUp {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 50px;
+    background: #04043f;
+    color: white;
+    font-size: 16.5px;
+    border-radius: 7px;
+    right: 250px;
+    top: 200px;
+    cursor: pointer;
+    text-align: center;
+} */
+
+
+#btnForSignUp {
+    position: absolute;
+    width: 120px;
+    height: 50px;
+    background: #04043f;
+    color: white;
+    font-size: 16.5px;
+    border-radius: 7px;
+    right: 250px;
+    top: 200px;
+    cursor: pointer;
+}
+
+
+/* Customizing the checkbox on the dashbaord page :  */
+input[type="checkbox"]:checked {
+    background-color: red;
+}
+
+.hr {
+    /* border:none; */
+    width: 100%;
+    height: 2px;
+    background-color: black;
 }

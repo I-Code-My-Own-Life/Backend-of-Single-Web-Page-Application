@@ -18,6 +18,12 @@ function Switch_page(id) {
     nextPage.classList.add("is-active");
 }
 
+// When someone clicks on the sign up button on frontend page then switch the page to login and register : 
+const btnForSignUp = document.getElementById("btnForSignUp");
+btnForSignUp.addEventListener("click",()=>{
+    Switch_page(4);
+    window.scrollTo(0,0);
+})
 // Registration alert box : 
 const alertBox = document.querySelector('.alert');
 // Login alert box : 
@@ -114,6 +120,7 @@ loginForm.addEventListener('submit', (event) => {
 // Getting account_info form : 
 const account_info_form = document.getElementById("account_info_form");
 let updateData = true;
+let taskDoneFetched = false;
 // Adding event listener to account info edit form : 
 account_info_form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -175,21 +182,54 @@ account_info_form.addEventListener("submit", (event) => {
 })
 
 // Handling the task storing management :
-// Getting the button to add task in the dashboard page : 
+// Getting the button to add task in the dashboard page in the home column : 
 const addTaskBtnHome = document.getElementById('addTaskBtnHome');
+// Getting the button to add task in the dashboard page in the coursework column : 
+const addTaskBtnCourse = document.getElementById('addTaskBtnCourse');
+// Getting the button to add task in the dashboard page in the exams column : 
+const addTaskBtnExam = document.getElementById('addTaskBtnExam');
 // Getting the homework task column : 
 const homework = document.getElementById("homework");
 // Getting the form that stores task description in the database :
 const addTaskDBForm = document.getElementById('addTaskDBForm');
 // Get the modal element
 let modal = document.getElementById("alert-modal");
+// Second modal : 
+let modal2 = document.getElementById("alert-modal2");
 // Get the <span> element that closes the modal
 let span = document.getElementsByClassName("close")[0];
 
+let type = "homeTask";
+let typeForSavingTaskDone = "homeTask";
+
+let inputTags = document.querySelectorAll('.tasks input');
+let inputArray = Array.from(inputTags);
+
+for (let i = 0; i < inputArray.length; i++) {
+    let bool;
+    if (inputArray[i].name == "1") {
+        bool = true;
+    }
+    else {
+        bool = false;
+    }
+    inputArray[i].checked = bool;
+}
+// Adding event listeners to open the modal : 
 addTaskBtnHome.addEventListener("click", () => {
+    type = 'homeTask';
+    modal.style.display = "block";
+})
+addTaskBtnCourse.addEventListener("click", () => {
+    type = "courseTask";
+    modal.style.display = "block";
+})
+addTaskBtnExam.addEventListener("click", () => {
+    type = "examTask";
     modal.style.display = "block";
 })
 
+// Event listener to close the modal : 
 span.addEventListener("click", () => {
     // Animation to close the modal : 
     closeModal();
@@ -208,6 +248,7 @@ addTaskDBForm.addEventListener("submit", (event) => {
     event.preventDefault();
     let formData = new FormData(addTaskDBForm);
     let obj = Object.fromEntries(formData);
+    obj['type'] = type;
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/');
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -218,9 +259,9 @@ addTaskDBForm.addEventListener("submit", (event) => {
                 event.target.reset();
                 // Closing the modal : 
                 closeModal();
-                setTimeout(()=>{
+                setTimeout(() => {
                     location.reload();
-                },500)
+                }, 500)
             }
             else if (response.status === 'wrong_password') {
                 window.alert("There was an error");
@@ -231,9 +272,9 @@ addTaskDBForm.addEventListener("submit", (event) => {
         }
     };
     xhr.send(JSON.stringify(obj));
-})
+});
 
-
+// Function to close the modal : 
 function closeModal() {
     modal.classList.remove("fade-in");
     modal.classList.add("fade-out");
@@ -260,3 +301,47 @@ function addTask() {
     // Appending the div to the document : 
     homework.appendChild(div);
 }
+
+// Now here we are going to save the checkbox input in the database :
+
+const saveTaskDone = document.getElementById("saveTaskDone");
+
+saveTaskDone.addEventListener('click', () => {    
+    // Displaying the alert : 
+    modal2.style.display = "block";
+    // Closing the alert after 2 seconds : 
+    setTimeout(() => {
+        modal2.classList.remove("fade-in");
+        modal2.classList.add("fade-out");
+        setTimeout(function () {
+            modal2.style.display = "none";
+            modal2.classList.remove("fade-out");
+        }, 300);
+    },1100)
+    // Making alert animation :
+    let inputTags = document.querySelectorAll('.tasks input');
+    let inputArray = Array.from(inputTags);
+    for (let i = 0; i < inputArray.length; i++) {
+        inputArray[i] = { id: inputArray[i].value, checked: inputArray[i].checked };
+        taskDoneFetched = true;
+    }
+    let obj = { taskDoneArr: inputArray };
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = () => {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.status === 'success') {
+                console.log("Success. The task done variable was inserted successfully.");
+            }
+            else if (response.status === 'wrong_password') {
+                window.alert("There was an error");
+            }
+        }
+        else {
+            window.alert("There was an error");
+        }
+    };
+    xhr.send(JSON.stringify(obj));
+})
