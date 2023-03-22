@@ -527,8 +527,10 @@ input[type="checkbox"]:checked {
     background-color: red;
 }
 
+/* Designing the grade calculator page :  */
+
 .hr {
-    /* border:none; */
+    border:none;
     width: 90%;
     height: 2px;
     background-color: black;
@@ -538,8 +540,7 @@ input[type="checkbox"]:checked {
 #calculateGrade {
     position: absolute;
     left: 44%;
-    top: 50%;
-    transform: translateY(300px);
+    bottom: 10%;
     width: 12%;
     height: 7%;
     background: #f84c40;
@@ -547,7 +548,7 @@ input[type="checkbox"]:checked {
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    margin-top: 100px;
+    margin-top: 150px;
 }
 
 #calculateGrade:hover {
