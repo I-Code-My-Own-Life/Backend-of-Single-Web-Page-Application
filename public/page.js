@@ -20,9 +20,9 @@ function Switch_page(id) {
 
 // When someone clicks on the sign up button on frontend page then switch the page to login and register : 
 const btnForSignUp = document.getElementById("btnForSignUp");
-btnForSignUp.addEventListener("click",()=>{
+btnForSignUp.addEventListener("click", () => {
     Switch_page(4);
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
 })
 // Registration alert box : 
 const alertBox = document.querySelector('.alert');
@@ -306,7 +306,7 @@ function addTask() {
 
 const saveTaskDone = document.getElementById("saveTaskDone");
 
-saveTaskDone.addEventListener('click', () => {    
+saveTaskDone.addEventListener('click', () => {
     // Displaying the alert : 
     modal2.style.display = "block";
     // Closing the alert after 2 seconds : 
@@ -317,7 +317,7 @@ saveTaskDone.addEventListener('click', () => {
             modal2.style.display = "none";
             modal2.classList.remove("fade-out");
         }, 300);
-    },1100)
+    }, 1100)
     // Making alert animation :
     let inputTags = document.querySelectorAll('.tasks input');
     let inputArray = Array.from(inputTags);
@@ -344,4 +344,23 @@ saveTaskDone.addEventListener('click', () => {
         }
     };
     xhr.send(JSON.stringify(obj));
+})
+
+// Getting the button to calculate the grade : 
+const calculateGrade = document.getElementById('calculateGrade');
+// Getting the alert : 
+let modal3 = document.getElementById("alert-modal3");
+// Showing the alert when calculating the grade : 
+calculateGrade.addEventListener('click', (event) => {
+    // Animation to show the alert : 
+    modal3.style.display = "block";
+    setTimeout(() => {
+        modal3.classList.remove("fade-in");
+        modal3.classList.add("fade-out");
+        setTimeout(function () {
+            modal3.style.display = "none";
+            modal3.classList.remove("fade-out");
+        }, 300);
+    }, 1100);
+    // Main task (Calculating the grade) :
 })

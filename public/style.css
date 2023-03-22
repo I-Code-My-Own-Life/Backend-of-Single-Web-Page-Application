@@ -534,3 +534,34 @@ input[type="checkbox"]:checked {
     background-color: black;
     margin: auto;
 }
+
+#calculateGrade {
+    position: absolute;
+    left: 44%;
+    top: 50%;
+    transform: translateY(300px);
+    width: 12%;
+    height: 7%;
+    background: #f84c40;
+    color: whitesmoke;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 100px;
+}
+
+#calculateGrade:hover {
+    opacity: 1;
+    background: #f12415fd;
+    transition: all 0.5s;
+}
+
+.textQuestion {
+    margin: 15px 0 0 0;
+    text-align: center;
+    color: crimson;
+}
+
+.question {
+    margin-top: 150px;
+}

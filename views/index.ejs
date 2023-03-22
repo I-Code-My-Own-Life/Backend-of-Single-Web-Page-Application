@@ -31,6 +31,16 @@
                 Please Wait....</h3>
         </div>
     </div>
+    <!-- Modal alert for calculating the grade :  -->
+    <div id="alert-modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 style="text-align:center; font-weight: 50; color: rgb(0, 162, 255);">Calculating your grade</h2>
+            <h3
+                style="text-align:center; font-weight: 50; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin-top: 15px;">
+                Please Wait....</h3>
+        </div>
+    </div>
     <div class="logo">
         <!-- <h1 class="logo-text">Logo</h1> -->
         <img src="/Assets/39f5fdbe34f1b58716e6571c1f1cb715.jpg" alt="">
@@ -58,39 +68,61 @@
                 <!-- Displaying welcome user when the user is logged in :  -->
                 <% if (typeof name !=="undefined" ) { %>
                     <h1 style="margin:20px; font-size: 23px; color:rgba(255, 0, 0, 0.747) ;">Welcome, <%= name %>!</h1>
-                <% } %>
-                <div class="content">
-                    <p style="margin-top: 200px; margin-left: 10%; width: 30%; display: inline-block;">Our student planner website is designed to help you stay organized and focused on your academic goals. With our intuitive task management tool, you can easily add, track, and complete your school assignments and exams. Our user-friendly interface allows you to prioritize your tasks, set reminders, and create a personalized study schedule that works for you. Say goodbye to the stress and chaos of keeping track of your schoolwork and hello to a more productive, successful academic life. Our planner website is your ultimate study buddy that will help you achieve your academic dreams. Try it out today and see the difference it can make!
-                    </p>
-                    <img id="img1" src="/Assets/study4.jpg" alt="">
-                </div>
-                <div class="content2">
-                    <div class="suggestions">
-                        <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study1.jpg" alt="">
-                        <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study2.jpg" alt="">
-                        <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study3.jpg" alt="">
-                    </div>
-                    <div class="headings">
-                        <h2 style="text-align: center" >Plan your studies</h2>
-                        <h2 style="text-align: center">Stay focused</h2>
-                        <h2 style="text-align: center" >Organize your work</h2>
-                    </div>
-                    <div class="text">
-                        <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">Planning your studies is essential for academic success, and our student planner website is here to help. With our planner tool, you can easily create a personalized study schedule that fits your needs and preferences. 
-                        </p>
-                        <p style="text-align: center; margin-top: 15px; width: 270px;  display: inline-block;">Staying focused is crucial for achieving academic success, but it can be a challenge in our fast-paced world. With our task management tool, you can prioritize your assignments and schedule dedicated study time
-                        </p>
-                        <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">Organizing your work is a key part of academic success, and our student planner website is designed to make it easy. With our task management tool, you can keep track of your assignments and exams, and prioritize them based on their importance and due dates. 
-                        </p>
-                    </div>
-                </div>
-                <div class="content3">
-                    <h1 style="width:280px; position: absolute; top: 180px; left: 150px; font-size: 26px;">Sign up now to get the most out of your studies</h1>
-                    <!-- <a id="btnForSignUp" data-switcher data-tab="4">Sign Up</a> -->
-                    <button id="btnForSignUp">Sign Up</button>
-                </div>
-                <div class="footer">
-                </div>
+                    <% } %>
+                        <div class="content">
+                            <p style="margin-top: 200px; margin-left: 10%; width: 30%; display: inline-block;">Our
+                                student planner website is designed to help you stay organized and focused on your
+                                academic goals. With our intuitive task management tool, you can easily add, track, and
+                                complete your school assignments and exams. Our user-friendly interface allows you to
+                                prioritize your tasks, set reminders, and create a personalized study schedule that
+                                works for you. Say goodbye to the stress and chaos of keeping track of your schoolwork
+                                and hello to a more productive, successful academic life. Our planner website is your
+                                ultimate study buddy that will help you achieve your academic dreams. Try it out today
+                                and see the difference it can make!
+                            </p>
+                            <img id="img1" src="/Assets/study4.jpg" alt="">
+                        </div>
+                        <div class="content2">
+                            <div class="suggestions">
+                                <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study1.jpg"
+                                    alt="">
+                                <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study2.jpg"
+                                    alt="">
+                                <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study3.jpg"
+                                    alt="">
+                            </div>
+                            <div class="headings">
+                                <h2 style="text-align: center">Plan your studies</h2>
+                                <h2 style="text-align: center">Stay focused</h2>
+                                <h2 style="text-align: center">Organize your work</h2>
+                            </div>
+                            <div class="text">
+                                <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">
+                                    Planning your studies is essential for academic success, and our student planner
+                                    website is here to help. With our planner tool, you can easily create a personalized
+                                    study schedule that fits your needs and preferences.
+                                </p>
+                                <p style="text-align: center; margin-top: 15px; width: 270px;  display: inline-block;">
+                                    Staying focused is crucial for achieving academic success, but it can be a challenge
+                                    in our fast-paced world. With our task management tool, you can prioritize your
+                                    assignments and schedule dedicated study time
+                                </p>
+                                <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">
+                                    Organizing your work is a key part of academic success, and our student planner
+                                    website is designed to make it easy. With our task management tool, you can keep
+                                    track of your assignments and exams, and prioritize them based on their importance
+                                    and due dates.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="content3">
+                            <h1 style="width:280px; position: absolute; top: 180px; left: 150px; font-size: 26px;">Sign
+                                up now to get the most out of your studies</h1>
+                            <!-- <a id="btnForSignUp" data-switcher data-tab="4">Sign Up</a> -->
+                            <button id="btnForSignUp">Sign Up</button>
+                        </div>
+                        <div class="footer">
+                        </div>
             </div>
             <!-- Task management page :  -->
             <div class="page" data-page="2">
@@ -149,11 +181,28 @@
             <!-- Grade Calculator page :  -->
             <div class="page" data-page="3">
                 <div>
-                    <h1 style="font-size: 30px; margin-top: 20px; text-align: center; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;">Grade Calculator</h1>
+                    <h1
+                        style="font-size: 30px; margin-top: 20px; text-align: center; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;">
+                        Grade Calculator</h1>
                     <br>
                     <div class="hr"></div>
                 </div>
-                <h3>How many tests is your module or subject split into</h3>
+                <div class="questions">
+                    <div id="firstQuestion">
+                        <h3 class="textQuestion" >How many tests is your module or subject split into ?</h3>
+                    </div>
+                    <div class="question" id="secondQuestion">
+                        <h3 class="textQuestion">How much is each test worth (in percent) ? and how many marks is each test out of ?</h3>
+                    </div>
+                    <div class="question" id="thirdQuestion">
+                        <h3 class="textQuestion">How much did you get on your tests ?</h3>
+                    </div>
+                </div>
+                <!-- Button to calculate the grade of the student :  -->
+                <button id="calculateGrade">Calculate</button>
+                <div style="width: 100%; height: 50px; background:black;">
+                        
+                </div>
             </div>
             <!---- Login page and registration page ---->
             <div id="login-reg" class="page" data-page="4">
@@ -239,10 +288,3 @@
 <!-- Dashboard
 Grade Calculator
 Login/Register -->
-
-
-
-<!-- Code which checks whether or not you are logged in or not :  -->
-
-<!-- 
-
