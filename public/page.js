@@ -346,10 +346,92 @@ saveTaskDone.addEventListener('click', () => {
     xhr.send(JSON.stringify(obj));
 })
 
+// Grade calculator page javascript : 
 // Getting the button to calculate the grade : 
 const calculateGrade = document.getElementById('calculateGrade');
+let percentage = 0;
+let totalMarksObtained = 0
+let m = 200;
+// Based on the number of test the user inputs, we are going to append more inputs tags of tests in the second question to take input from the user about those tests : 
+
+const numOfSubs = document.getElementById('numOfSubs');
+let numOfTestMarks = 0;
+
+numOfSubs.addEventListener("input", (event) => {
+    numOfTestMarks = 0;
+    calculateGrade.style.bottom = `-${55 + 35}%`
+    let quest = document.getElementsByClassName('question')[0];
+    quest.style.marginTop = `50px`;
+    let numberOfTests = event.target.value;
+    let secondQuestion = document.getElementById('secondQuestion');
+    let divToAppendto = secondQuestion.lastElementChild;
+    divToAppendto.innerHTML = "";
+    // We are going to be appending divs according to the number of tests input : 
+    for (let i = 0; i < numberOfTests; i++) {
+        let divToAppend = document.createElement('div');
+        divToAppend.classList.add('testInfo');
+        // First child element : 
+        let heading1 = document.createElement('h2');
+        let pre1 = document.createElement('pre');
+        pre1.innerText = ` Test ${i + 1}  --  `;
+        heading1.appendChild(pre1);
+        // Second child element : 
+        let input1 = document.createElement('input');
+        input1.classList.add("testInputs");
+        input1.type = "text";
+        input1.placeholder = "Percent";
+        // Third child element : 
+        let heading2 = document.createElement('h2');
+        let pre2 = document.createElement('pre');
+        pre2.innerText = " --  ";
+        heading2.appendChild(pre2);
+        // Fourth child element : 
+        let input2 = document.createElement('input');
+        input2.classList.add("testInputs");
+        input2.type = "text";
+        input2.placeholder = "Marks";
+        let arr = [heading1, input1, heading2, input2];
+        // Appending all these child in the divToAppend : 
+        for (let i = 0; i < arr.length; i++) {
+            divToAppend.appendChild(arr[i]);
+        }
+        divToAppendto.appendChild(divToAppend);
+    }
+
+    // Now have to do the same thing for the third question : 
+    let thirdQuestion = document.getElementById('thirdQuestion');
+    let seconddivToAppendto = thirdQuestion.lastElementChild;
+    seconddivToAppendto.innerHTML = "";
+    // We are going to be appending divs according to the number of tests input : 
+    for (let i = 0; i < numberOfTests; i++) {
+        numOfTestMarks++;
+        let divToAppend = document.createElement('div');
+        divToAppend.classList.add('testInfo');
+        // First child element : 
+        let heading1 = document.createElement('h2');
+        let pre1 = document.createElement('pre');
+        pre1.innerText = ` Test ${i + 1}  --  `;
+        heading1.appendChild(pre1);
+        // Second child element : 
+        let input1 = document.createElement('input');
+        input1.classList.add("testInputs");
+        input1.type = "text";
+        input1.placeholder = "Marks";
+        let arr = [heading1, input1];
+        // Appending all these child in the divToAppend : 
+        for (let i = 0; i < arr.length; i++) {
+            divToAppend.appendChild(arr[i]);
+        }
+        seconddivToAppendto.appendChild(divToAppend);
+    }
+    if (numOfTestMarks <= 5) {
+        calculateGrade.style.bottom = `-${60}%`
+    }
+})
+
 // Getting the alert : 
 let modal3 = document.getElementById("alert-modal3");
+let modal4 = document.getElementById("alert-modal4");
 // Showing the alert when calculating the grade : 
 calculateGrade.addEventListener('click', (event) => {
     // Animation to show the alert : 
@@ -363,4 +445,59 @@ calculateGrade.addEventListener('click', (event) => {
         }, 300);
     }, 1100);
     // Main task (Calculating the grade) :
+    percentage = 0;
+    totalMarksObtained = 0;
+    // Let's first get the obtained marks of the student :
+    const marksObtainedInp = document.querySelectorAll('#thirdQuestion input[placeholder="Marks"]');
+    for (let i = 0; i < marksObtainedInp.length; i++) {
+        totalMarksObtained += Number(marksObtainedInp[i].value);
+    }
+    // Now, let's get the worth (in percent) of all the tests : 
+    const percentInputs = document.querySelectorAll('#secondQuestion input[placeholder="Percent"]');
+    for (let i = 0; i < percentInputs.length; i++) {
+        percentage += Number(percentInputs[i].value);
+    }
+    let numberOfTests = Number(numOfSubs.value);
+    // At last, let's calcuate the overall grade of the student :
+    let overallGradePercent = totalMarksObtained / (percentage * numberOfTests) * 100;
+    let grade = "";
+    let span = document.getElementById('spanclose');
+    span.addEventListener("click", () => {
+        modal4.classList.remove("fade-in");
+        modal4.classList.add("fade-out");
+        setTimeout(function () {
+            modal4.style.display = "none";
+            modal4.classList.remove("fade-out");
+        }, 300);
+    })
+    setTimeout(() => {
+        let h2 = document.querySelector("#alert-modal4 h2");
+        let h3 = document.querySelector("#alert-modal4 h3");
+        if (overallGradePercent >= 91) {
+            modal4.style.display = "block";
+            grade = "A+";
+        } else if (overallGradePercent >= 90) {
+            modal4.style.display = "block";
+            grade = "A";
+        }
+        else if (overallGradePercent >= 80) {
+            h2.innerText = "Great !"
+            modal4.style.display = "block";
+            grade = "B";
+        } else if (overallGradePercent >= 70) {
+            h2.innerText = "Awesome !"
+            modal4.style.display = "block";
+            grade = "C";
+        } else if (overallGradePercent >= 60) {
+            h2.innerText = "That's good !"
+            modal4.style.display = "block";
+            grade = "D";
+        } else {
+            h2.innerText = "You need to improve !"
+            modal4.style.display = "block";
+            grade = "F";
+        }
+        h3.innerText = `Your grade is ${grade}`;
+    }, 1150);
+    console.log(overallGradePercent)
 })

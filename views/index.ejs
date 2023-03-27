@@ -2,281 +2,318 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single Web page</title>
-    <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Web page</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-    <!-- Modal alert :  -->
-    <div id="alert-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form action="/" method="post" id="addTaskDBForm">
-                <label for="taskDescription">Task Description</label>
-                <input placeholder="Minimum 40 characters" type="text" id="taskDescription" name="taskDescription">
-                <button id="addTaskDBbtn" type="submit">Add task</button>
-            </form>
-        </div>
+  <!-- Modal alert :  -->
+  <div id="alert-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form action="/" method="post" id="addTaskDBForm">
+        <label for="taskDescription">Task Description</label>
+        <input class="inps" placeholder="Minimum 40 characters" type="text" id="taskDescription" name="taskDescription">
+        <button id="addTaskDBbtn" type="submit">Add task</button>
+      </form>
     </div>
-    <!-- Modal alert for saving checkbox input :  -->
-    <div id="alert-modal2" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 style="text-align:center; font-weight: 50; color: red;">Saving your completed tasks</h2>
-            <h3
-                style="text-align:center; font-weight: 50; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin-top: 15px;">
-                Please Wait....</h3>
-        </div>
+  </div>
+  <!-- Modal alert for saving checkbox input :  -->
+  <div id="alert-modal2" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 style="text-align:center; font-weight: 50; color: red;">Saving your completed tasks</h2>
+      <h3 style="text-align:center; font-weight: 50; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin-top: 15px;">
+        Please Wait....</h3>
     </div>
-    <!-- Modal alert for calculating the grade :  -->
-    <div id="alert-modal3" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 style="text-align:center; font-weight: 50; color: rgb(0, 162, 255);">Calculating your grade</h2>
-            <h3
-                style="text-align:center; font-weight: 50; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin-top: 15px;">
-                Please Wait....</h3>
-        </div>
+  </div>
+  <!-- Modal alert for calculating the grade :  -->
+  <div id="alert-modal3" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 style="text-align:center; font-weight: 50; color: rgb(0, 162, 255);">Calculating your grade</h2>
+      <h3 style="text-align:center; font-weight: 50; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin-top: 15px;">
+        Please Wait....</h3>
     </div>
-    <div class="logo">
-        <!-- <h1 class="logo-text">Logo</h1> -->
-        <img src="/Assets/39f5fdbe34f1b58716e6571c1f1cb715.jpg" alt="">
+  </div>
+  <!-- Modal alert for calculating the grade :  -->
+  <div id="alert-modal4" class="modal">
+    <div class="modal-content">
+      <span id="spanclose" class="close">&times;</span>
+      <h2 style="text-align:center; font-weight: 50; color: rgb(0, 162, 255);">Congratulations !</h2>
+      <h3 style="text-align:center; font-weight: 50; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin-top: 15px;">
+        Your grade is A+</h3>
     </div>
-    <header>
-        <div class="navbar">
-            <nav>
-                <ul class="tabs">
-                    <li class="tab is-active"><a data-switcher data-tab="1">Home</a></li>
-                    <li class="tab"><a data-switcher data-tab="2">Dashboard</a></li>
-                    <li class="tab"><a data-switcher data-tab="3">Grade Calculator</a></li>
-                    <% if (typeof name=="undefined" ) { %>
-                        <li class="tab"><a data-switcher data-tab="4">Login/Register</a></li>
-                        <% } else { %>
-                            <li class="tab"><a data-switcher data-tab="5">My Account</a></li>
-                            <% } %>
-                </ul>
-            </nav>
+  </div>
+  <div class="logo">
+    <!-- <h1 class="logo-text">Logo</h1> -->
+    <img src="/Assets/39f5fdbe34f1b58716e6571c1f1cb715.jpg" alt="">
+  </div>
+  <header>
+    <div class="navbar">
+      <nav>
+        <ul class="tabs">
+          <li class="tab is-active"><a data-switcher data-tab="1">Home</a></li>
+          <li class="tab"><a data-switcher data-tab="2">Dashboard</a></li>
+          <li class="tab"><a data-switcher data-tab="3">Grade Calculator</a></li>
+          <% if (typeof name=="undefined" ) { %>
+          <li class="tab"><a data-switcher data-tab="4">Login/Register</a></li>
+          <% } else { %>
+          <li class="tab"><a data-switcher data-tab="5">My Account</a></li>
+          <% } %>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- Section we are going to display :  -->
+  <main>
+    <section class="pages">
+      <div class="page is-active" data-page="1">
+        <!-- Displaying welcome user when the user is logged in :  -->
+        <% if (typeof name !=="undefined" ) { %>
+        <h1 style="margin:20px; font-size: 23px; color:rgba(255, 0, 0, 0.747) ;">Welcome, <%= name %>!</h1>
+        <% } %>
+        <div class="content">
+          <p style="margin-top: 200px; margin-left: 10%; width: 30%; display: inline-block;">Our
+            student planner website is designed to help you stay organized and focused on your
+            academic goals. With our intuitive task management tool, you can easily add, track, and
+            complete your school assignments and exams. Our user-friendly interface allows you to
+            prioritize your tasks, set reminders, and create a personalized study schedule that
+            works for you. Say goodbye to the stress and chaos of keeping track of your schoolwork
+            and hello to a more productive, successful academic life. Our planner website is your
+            ultimate study buddy that will help you achieve your academic dreams. Try it out today
+            and see the difference it can make!
+          </p>
+          <img id="img1" src="/Assets/study4.jpg" alt="">
         </div>
-    </header>
-    <!-- Section we are going to display :  -->
-    <main>
-        <section class="pages">
-            <div class="page is-active" data-page="1">
-                <!-- Displaying welcome user when the user is logged in :  -->
-                <% if (typeof name !=="undefined" ) { %>
-                    <h1 style="margin:20px; font-size: 23px; color:rgba(255, 0, 0, 0.747) ;">Welcome, <%= name %>!</h1>
-                    <% } %>
-                        <div class="content">
-                            <p style="margin-top: 200px; margin-left: 10%; width: 30%; display: inline-block;">Our
-                                student planner website is designed to help you stay organized and focused on your
-                                academic goals. With our intuitive task management tool, you can easily add, track, and
-                                complete your school assignments and exams. Our user-friendly interface allows you to
-                                prioritize your tasks, set reminders, and create a personalized study schedule that
-                                works for you. Say goodbye to the stress and chaos of keeping track of your schoolwork
-                                and hello to a more productive, successful academic life. Our planner website is your
-                                ultimate study buddy that will help you achieve your academic dreams. Try it out today
-                                and see the difference it can make!
-                            </p>
-                            <img id="img1" src="/Assets/study4.jpg" alt="">
-                        </div>
-                        <div class="content2">
-                            <div class="suggestions">
-                                <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study1.jpg"
-                                    alt="">
-                                <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study2.jpg"
-                                    alt="">
-                                <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study3.jpg"
-                                    alt="">
-                            </div>
-                            <div class="headings">
-                                <h2 style="text-align: center">Plan your studies</h2>
-                                <h2 style="text-align: center">Stay focused</h2>
-                                <h2 style="text-align: center">Organize your work</h2>
-                            </div>
-                            <div class="text">
-                                <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">
-                                    Planning your studies is essential for academic success, and our student planner
-                                    website is here to help. With our planner tool, you can easily create a personalized
-                                    study schedule that fits your needs and preferences.
-                                </p>
-                                <p style="text-align: center; margin-top: 15px; width: 270px;  display: inline-block;">
-                                    Staying focused is crucial for achieving academic success, but it can be a challenge
-                                    in our fast-paced world. With our task management tool, you can prioritize your
-                                    assignments and schedule dedicated study time
-                                </p>
-                                <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">
-                                    Organizing your work is a key part of academic success, and our student planner
-                                    website is designed to make it easy. With our task management tool, you can keep
-                                    track of your assignments and exams, and prioritize them based on their importance
-                                    and due dates.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="content3">
-                            <h1 style="width:280px; position: absolute; top: 180px; left: 150px; font-size: 26px;">Sign
-                                up now to get the most out of your studies</h1>
-                            <!-- <a id="btnForSignUp" data-switcher data-tab="4">Sign Up</a> -->
-                            <button id="btnForSignUp">Sign Up</button>
-                        </div>
-                        <div class="footer">
-                        </div>
+        <div class="content2">
+          <div class="suggestions">
+            <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study1.jpg" alt="">
+            <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study2.jpg" alt="">
+            <img style="margin-top: 70px; width: 270px; height: 200px;" src="/Assets/study3.jpg" alt="">
+          </div>
+          <div class="headings">
+            <h2 style="text-align: center">Plan your studies</h2>
+            <h2 style="text-align: center">Stay focused</h2>
+            <h2 style="text-align: center">Organize your work</h2>
+          </div>
+          <div class="text">
+            <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">
+              Planning your studies is essential for academic success, and our student planner
+              website is here to help. With our planner tool, you can easily create a personalized
+              study schedule that fits your needs and preferences.
+            </p>
+            <p style="text-align: center; margin-top: 15px; width: 270px;  display: inline-block;">
+              Staying focused is crucial for achieving academic success, but it can be a challenge
+              in our fast-paced world. With our task management tool, you can prioritize your
+              assignments and schedule dedicated study time
+            </p>
+            <p style="text-align: center; margin-top: 15px; width: 270px; display: inline-block;">
+              Organizing your work is a key part of academic success, and our student planner
+              website is designed to make it easy. With our task management tool, you can keep
+              track of your assignments and exams, and prioritize them based on their importance
+              and due dates.
+            </p>
+          </div>
+        </div>
+        <div class="content3">
+          <h1 style="width:280px; position: absolute; top: 180px; left: 150px; font-size: 26px;">Sign
+            up now to get the most out of your studies</h1>
+          <!-- <a id="btnForSignUp" data-switcher data-tab="4">Sign Up</a> -->
+          <button id="btnForSignUp">Sign Up</button>
+        </div>
+        <div class="footer">
+        </div>
+      </div>
+      <!-- Task management page :  -->
+      <div class="page" data-page="2">
+        <div class="tasks">
+          <!-- Homework tasks :  -->
+          <div class="task-handler" id="homework">
+            <h2 style="text-align: center; font-weight: 200;">Homework</h2>
+            <% if (tasks[0] == undefined) { %>
+            <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);">Nothing to show here.</p>
+            <% } else { %>
+            <% for (var i=0; i < tasks.length; i++) { %>
+            <% if (tasks[i].type==="homeTask" ) { %>
+            <div class="task-elements">
+              <label class="label">
+                <%= tasks[i].taskDescription %>
+              </label>
+              <input type="checkbox" value="<%= tasks[i].taskid %>" name="<%= tasks[i].taskDone %>">
             </div>
-            <!-- Task management page :  -->
-            <div class="page" data-page="2">
-                <div class="tasks">
-                    <!-- Homework tasks :  -->
-                    <div class="task-handler" id="homework">
-                        <h2 style="text-align: center; font-weight: 200;">Homework</h2>
-                        <% for (var i=0; i < tasks.length; i++) { %>
-                            <% if (tasks[i].type==="homeTask" ) { %>
-                                <div class="task-elements">
-                                    <label class="label">
-                                        <%= tasks[i].taskDescription %>
-                                    </label>
-                                    <input type="checkbox" value="<%= tasks[i].taskid %>"
-                                        name="<%= tasks[i].taskDone %>">
-                                </div>
-                                <% } %>
-                                    <% } %>
-                                        <button class="addTaskBtn" id="addTaskBtnHome">New</button>
-                    </div>
-                    <!-- Coursework tasks :  -->
-                    <div class="task-handler" id="coursework">
-                        <h2 style="text-align: center;font-weight: 200;">Coursework</h2>
-                        <% for (var i=0; i < tasks.length; i++) { %>
-                            <% if (tasks[i].type==="courseTask" ) { %>
-                                <div class="task-elements">
-                                    <label class="label">
-                                        <%= tasks[i].taskDescription %>
-                                    </label>
-                                    <input type="checkbox" value="<%= tasks[i].taskid %>"
-                                        name="<%= tasks[i].taskDone %>">
-                                </div>
-                                <% } %>
-                                    <% } %>
-                                        <button class="addTaskBtn" id="addTaskBtnCourse">New</button>
-                    </div>
-                    <!-- Exam taks :  -->
-                    <div class="task-handler" id="exam">
-                        <h2 style="text-align: center;font-weight: 200;">Exams</h2>
-                        <% for (var i=0; i < tasks.length; i++) { %>
-                            <% if (tasks[i].type==="examTask" ) { %>
-                                <div class="task-elements">
-                                    <label class="label">
-                                        <%= tasks[i].taskDescription %>
-                                    </label>
-                                    <input type="checkbox" value="<%= tasks[i].taskid %>"
-                                        name="<%= tasks[i].taskDone %>">
-                                </div>
-                                <% } %>
-                                    <% } %>
-                                        <button class="addTaskBtn" id="addTaskBtnExam">New</button>
-                    </div>
-                </div>
-                <button id="saveTaskDone">Save</button>
+            <% } %>
+            <% } %>
+            <% } %>
+            <button class="addTaskBtn" id="addTaskBtnHome">New</button>
+          </div>
+          <!-- Coursework tasks :  -->
+          <div class="task-handler" id="coursework">
+            <h2 style="text-align: center;font-weight: 200;">Coursework</h2>
+            <% if (tasks[0] == undefined) { %>
+            <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);">Nothing
+              to show here.</p>
+            <% } else { %>
+            <% for (var i=0; i < tasks.length; i++) { %>
+            <% if (tasks[i].type==="courseTask" ) { %>
+            <div class="task-elements">
+              <label class="label">
+                <%= tasks[i].taskDescription %>
+              </label>
+              <input type="checkbox" value="<%= tasks[i].taskid %>" name="<%= tasks[i].taskDone %>">
             </div>
-            <!-- Grade Calculator page :  -->
-            <div class="page" data-page="3">
-                <div>
-                    <h1
-                        style="font-size: 30px; margin-top: 20px; text-align: center; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;">
-                        Grade Calculator</h1>
-                    <br>
-                    <div class="hr"></div>
-                </div>
-                <div class="questions">
-                    <div id="firstQuestion">
-                        <h3 class="textQuestion" >How many tests is your module or subject split into ?</h3>
-                    </div>
-                    <div class="question" id="secondQuestion">
-                        <h3 class="textQuestion">How much is each test worth (in percent) ? and how many marks is each test out of ?</h3>
-                    </div>
-                    <div class="question" id="thirdQuestion">
-                        <h3 class="textQuestion">How much did you get on your tests ?</h3>
-                    </div>
-                </div>
-                <!-- Button to calculate the grade of the student :  -->
-                <button id="calculateGrade">Calculate</button>
-                <div style="position: absolute; bottom: 0; width: 100%; height: 50px; background:black;"></div>
+            <% } %>
+            <% } %>
+            <% } %>
+            <button class="addTaskBtn" id="addTaskBtnCourse">New</button>
+          </div>
+          <!-- Exam taks :  -->
+          <div class="task-handler" id="exam">
+            <h2 style="text-align: center;font-weight: 200;">Exams</h2>
+            <% if (tasks[0] == undefined) { %>
+            <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);">Nothing
+              to show here.</p>
+            <% } else { %>
+            <% for (var i=0; i < tasks.length; i++) { %>
+            <% if (tasks[i].type==="examTask" ) { %>
+            <div class="task-elements">
+              <label class="label">
+                <%= tasks[i].taskDescription %>
+              </label>
+              <input type="checkbox" value="<%= tasks[i].taskid %>" name="<%= tasks[i].taskDone %>">
             </div>
-            <!---- Login page and registration page ---->
-            <div id="login-reg" class="page" data-page="4">
-                <!-- {{!-- Registration alert :  --}} -->
-                <div class="alert">
-                    <span class="closebtn" onclick="closeAlert()">&times;</span>
-                    This is a dismissible alert.
-                </div>
-                <h1>Register</h1>
-                <!-- Register form -->
-                <form action="/" method="post" id="registration-form">
-                    <div class="container">
-                        <hr>
-                        <!-- Name -->
-                        <label for="name"><b><i>Name</i></b></label>
-                        <input type="name" placeholder="Enter your name" name="name" id="name" required>
-                        <!-- Email -->
-                        <label for="email"><b><i>Email</i></b></label>
-                        <input type="text" placeholder="Enter your Email" name="email" id="email" required>
-                        <!-- Password -->
-                        <label for="password"><b><i>Password</i></b></label>
-                        <input type="password" placeholder="Enter your Password" name="password" id="password" required>
-                        <!-- Password -->
-                        <label for="age"><b><i>Age</i></b></label>
-                        <input type="age" placeholder="Enter your age" name="age" id="age" required>
-                        <button type="submit" class="registerbtn">Register</button>
-                    </div>
-                </form>
-                <h1 id="login-text">Login</h1>
-                <!-- {{!-- Login alert :  --}} -->
-                <div class="alertLogin">
-                    <span class="closebtn" onclick="closeAlert()">&times;</span>
-                    This is a dismissible alert.
-                </div>
-                <!-- Login form :  -->
-                <form action="/" method="post" id="login-form">
-                    <div class="container">
-                        <!-- Email : -->
-                        <label for="emailLogin"><b><i>Email</i></b></label>
-                        <input type="text" placeholder="Enter your Email" name="emailLogin" id="emailLogin" required>
-                        <!-- Password -->
-                        <label for="passwordLogin"><b><i>Password</i></b></label>
-                        <input type="password" placeholder="Enter your Password" name="passwordLogin" id="passwordLogin"
-                            required>
-                        <button type="submit" class="loginbtn">Login</button>
-                    </div>
-                </form>
+            <% } %>
+            <% } %>
+            <% } %>
+            <button class="addTaskBtn" id="addTaskBtnExam">New</button>
+          </div>
+        </div>
+        <button id="saveTaskDone">Save</button>
+        <div class="footer">
+        </div>
+      </div>
+      <!-- Grade Calculator page :  -->
+      <div class="page" data-page="3">
+        <div>
+          <h1 style="font-size: 30px; margin-top: 20px; text-align: center; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;">
+            Grade Calculator</h1>
+          <br>
+          <div class="hr"></div>
+        </div>
+        <div class="questions">
+          <div id="firstQuestion">
+            <h3 class="textQuestion">How many tests is your module or subject split into ?</h3>
+            <div style="text-align: center; margin-top: 35px;">
+              <input style="text-align: center;" type="number" name="numOfSubs" id="numOfSubs" min="1" max="8" placeholder="1 - 8"> &nbsp;
+              (min is 1 and max is 8)
             </div>
-            <!-- My Account page :  -->
-            <div class="page" data-page="5">
-                <a id="logout" href="/logout">Logout</a>
-                <h2 style="margin-bottom: 10px;" id="text">Your Account info</h2>
-                <div id="alertAccountEdit">
-                    <span class="closebtn" onclick="closeAlert()">&times;</span>
-                    This is a dismissible alert.
-                </div>
-                <form action="/" method="post" id="account_info_form">
-                    <div class="container">
-                        <!-- Name : -->
-                        <label for="name-edit"><b><i>Your name</i></b></label>
-                        <input type="text" placeholder="<%= name %>" name="name-edit" id="name-edit">
-                        <!-- Email : -->
-                        <label for="email-eidt"><b><i>Email</i></b></label>
-                        <input type="text" placeholder="<%= email %>" name="email-edit" id="email-edit">
-                        <!-- Password -->
-                        <label for="password-eidt"><b><i>Password</i></b></label>
-                        <input type="password" placeholder="<%= password %>" name="password-edit" id="password-edit">
-                        <!-- Password -->
-                        <label for="age-eidt"><b><i>Age</i></b></label>
-                        <input type="age" readonly placeholder="<%= age %>" name="age-edit" id="age-edit">
-                        <button type="submit" id="editbtn">Edit</button>
-                    </div>
-                </form>
+          </div>
+          <div style="margin-top: 100px;" id="secondQuestion">
+            <h3 class="textQuestion">How much is each test worth (in percent) ? and how many marks is each
+              test out of ?</h3>
+            <div style="text-align: center; margin-top: 50px;">
             </div>
-        </section>
-    </main>
+          </div>
+          <div class="question" id="thirdQuestion">
+            <h3 class="textQuestion">How much did you get on your tests ?</h3>
+            <div style="text-align: center; margin-top: 50px;">
+            </div>
+          </div>
+        </div>
+        <!-- Button to calculate the grade of the student :  -->
+        <button id="calculateGrade">Calculate</button>
+        <!-- <div style="position: absolute; bottom: -500px; width: 100%; height: 50px; background:black;"></div>    -->
+      </div>
+      <!---- Login page and registration page ---->
+      <div id="login-reg" class="page" data-page="4">
+        <!-- {{!-- Registration alert :  --}} -->
+        <div class="alert">
+          <span class="closebtn" onclick="closeAlert()">&times;</span>
+          This is a dismissible alert.
+        </div>
+        <h1>Register</h1>
+        <div id="registrationDiv">
+          <!-- Register form -->
+          <form action="/" method="post" id="registration-form">
+            <div class="container">
+              <hr>
+              <!-- Name -->
+              <label for="name"><b><i>Name</i></b></label>
+              <input class="inps" type="name" placeholder="Enter your name" name="name" id="name" required>
+              <!-- Email -->
+              <label for="email"><b><i>Email</i></b></label>
+              <input class="inps" type="text" placeholder="Enter your Email" name="email" id="email" required>
+              <!-- Password -->
+              <label for="password"><b><i>Password</i></b></label>
+              <input class="inps" type="password" placeholder="Enter your Password" name="password" id="password" required>
+              <!-- Password -->
+              <label for="age"><b><i>Age</i></b></label>
+              <input class="inps" type="age" placeholder="Enter your age" name="age" id="age" required>
+              <div style="text-align: center;">
+                <button type="submit" class="registerbtn">Register</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <h1 id="login-text">Login</h1>
+        <!-- {{!-- Login alert :  --}} -->
+        <div class="alertLogin">
+          <span class="closebtn" onclick="closeAlert()">&times;</span>
+          This is a dismissible alert.
+        </div>
+        <!-- Login form :  -->
+        <div id="loginDiv">
+          <form action="/" method="post" id="login-form">
+            <div class="container">
+              <!-- Email : -->
+              <label for="emailLogin"><b><i>Email</i></b></label>
+              <input class="inps" type="text" placeholder="Enter your Email" name="emailLogin" id="emailLogin" required>
+              <!-- Password -->
+              <label for="passwordLogin"><b><i>Password</i></b></label>
+              <input class="inps" type="password" placeholder="Enter your Password" name="passwordLogin" id="passwordLogin" required>
+              <div style="text-align: center;">
+                <button type="submit" class="loginbtn">Login</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Footer :  -->
+        <div class="footer">
+        </div>
+      </div>
+      <!-- My Account page :  -->
+      <div class="page" data-page="5">
+        <a id="logout" href="/logout">Logout</a>
+        <h2 style="margin-bottom: 10px;" id="text">Your Account info</h2>
+        <div id="alertAccountEdit">
+          <span class="closebtn" onclick="closeAlert()">&times;</span>
+          This is a dismissible alert.
+        </div>
+        <form action="/" method="post" id="account_info_form">
+          <div class="container">
+            <!-- Name : -->
+            <label for="name-edit"><b><i>Your name</i></b></label>
+            <input class="inps" type="text" placeholder="<%= name %>" name="name-edit" id="name-edit">
+            <!-- Email : -->
+            <label for="email-eidt"><b><i>Email</i></b></label>
+            <input class="inps" type="text" placeholder="<%= email %>" name="email-edit" id="email-edit">
+            <!-- Password -->
+            <label for="password-eidt"><b><i>Password</i></b></label>
+            <input class="inps" type="password" placeholder="<%= password %>" name="password-edit" id="password-edit">
+            <!-- Password -->
+            <label for="age-eidt"><b><i>Age</i></b></label>
+            <input class="inps" type="age" readonly placeholder="<%= age %>" name="age-edit" id="age-edit">
+            <button type="submit" id="editbtn">Edit</button>
+          </div>
+        </form>
+        <div class="footer">
+        </div>
+      </div>
+    </section>
+  </main>
 </body>
 <script src="/page.js"></script>
 
